@@ -1,0 +1,323 @@
+[
+  {
+    "id": 1,
+    "food_name": "Cheese Burger",
+    "ingredients": ["Bun", "Cheese", "Lettuce", "Tomato", "Beef Patty", "Onion", "Pickles"],
+    "food_type": "Non-Veg",
+    "rating": 4.5,
+    "steps_to_prepare": [
+      "Grill the beef patty",
+      "Toast the bun",
+      "Assemble the burger with lettuce, tomato, and cheese",
+      "Add pickles and sauce",
+      "Serve hot"
+    ],
+    "image_url": "https://plus.unsplash.com/premium_photo-1683655058728-415f4f2674bf?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGJ1cmdlcnxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "id": 2,
+    "food_name": "Veggie Pizza",
+    "ingredients": ["Pizza Base", "Cheese", "Bell Peppers", "Onion", "Olives", "Tomato Sauce"],
+    "food_type": "Veg",
+    "rating": 4.2,
+    "steps_to_prepare": [
+      "Spread tomato sauce on the base",
+      "Add chopped veggies and cheese",
+      "Bake in oven at 200°C for 15 mins",
+      "Garnish with oregano",
+      "Slice and serve"
+    ],
+    "image_url": "https://plus.unsplash.com/premium_photo-1690056321981-dfe9e75e0247?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmVnZ2llJTIwcGl6emF8ZW58MHx8MHx8fDA%3D"
+  },
+  {
+    "id": 3,
+    "food_name": "Pasta Alfredo",
+    "ingredients": ["Pasta", "Cream", "Garlic", "Butter", "Parmesan", "Salt", "Pepper"],
+    "food_type": "Veg",
+    "rating": 4.6,
+    "steps_to_prepare": [
+      "Boil pasta until al dente",
+      "Prepare Alfredo sauce with butter, garlic, and cream",
+      "Mix pasta with sauce and parmesan",
+      "Season with salt and pepper",
+      "Serve warm"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1662197480393-2a82030b7b83?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGFzdGElMjBhbGZyZWRvfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 4,
+    "food_name": "Chicken Biryani",
+    "ingredients": ["Basmati Rice", "Chicken", "Yogurt", "Spices", "Onion", "Coriander"],
+    "food_type": "Non-Veg",
+    "rating": 4.8,
+    "steps_to_prepare": [
+      "Marinate chicken with yogurt and spices",
+      "Fry onions and cook chicken",
+      "Layer rice and chicken in a pot",
+      "Cook on low heat for 30 mins",
+      "Garnish and serve"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1701579231305-d84d8af9a3fd?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpY2tlbiUyMGJpcnlhbml8ZW58MHx8MHx8fDA%3D"
+  },
+  {
+    "id": 5,
+    "food_name": "Fruit Salad",
+    "ingredients": ["Apple", "Banana", "Orange", "Grapes", "Strawberries", "Honey", "Mint"],
+    "food_type": "Veg",
+    "rating": 4.3,
+    "steps_to_prepare": [
+      "Chop all fruits into small pieces",
+      "Add a drizzle of honey",
+      "Garnish with mint leaves",
+      "Chill before serving"
+    ],
+    "image_url": "https://plus.unsplash.com/premium_photo-1664478279991-832059d65835?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZnJ1aXQlMjBzYWxhZHxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "id": 6,
+    "food_name": "Grilled Sandwich",
+    "ingredients": ["Bread", "Cheese", "Tomato", "Cucumber", "Butter"],
+    "food_type": "Veg",
+    "rating": 4.1,
+    "steps_to_prepare": [
+      "Assemble sandwich",
+      "Grill till golden",
+      "Serve hot"
+    ],
+    "image_url": "https://plus.unsplash.com/premium_photo-1695127909043-86a3dce3f65e?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3JpbGxlZCUyMHNhbmR3aWNofGVufDB8fDB8fHww"
+  },
+  {
+    "id": 7,
+    "food_name": "Paneer Tikka",
+    "ingredients": ["Paneer", "Yogurt", "Spices", "Bell Peppers"],
+    "food_type": "Veg",
+    "rating": 4.7,
+    "steps_to_prepare": [
+      "Marinate paneer",
+      "Grill or bake",
+      "Serve with chutney"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1666001120694-3ebe8fd207be?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFuZWVyJTIwdGlra2F8ZW58MHx8MHx8fDA%3D"
+  },
+  {
+    "id": 8,
+    "food_name": "Egg Curry",
+    "ingredients": ["Boiled Eggs", "Onion", "Tomato", "Spices"],
+    "food_type": "Non-Veg",
+    "rating": 4.4,
+    "steps_to_prepare": [
+      "Prepare masala base",
+      "Add eggs",
+      "Simmer and serve"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1654023451875-223085c35eb1?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8RWdnJTIwY3Vycnl8ZW58MHx8MHx8fDA%3D"
+  },
+  {
+    "id": 9,
+    "food_name": "Chocolate Cake",
+    "ingredients": ["Flour", "Cocoa Powder", "Eggs", "Sugar", "Butter"],
+    "food_type": "Veg",
+    "rating": 4.9,
+    "steps_to_prepare": [
+      "Prepare batter",
+      "Bake at 180°C for 30 mins",
+      "Cool and serve"
+    ],
+    "image_url": "https://plus.unsplash.com/premium_photo-1715015440855-7d95cf92608a?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2hvY29sYXRlJTIwY2FrZXxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "id": 10,
+    "food_name": "Veg Momos",
+    "ingredients": ["Flour", "Cabbage", "Carrot", "Onion", "Garlic"],
+    "food_type": "Veg",
+    "rating": 4.3,
+    "steps_to_prepare": [
+      "Prepare filling",
+      "Stuff in dough",
+      "Steam for 10–15 mins"
+    ],
+    "image_url": "https://media.istockphoto.com/id/2210416105/photo/delicious-veg-momos-and-noodles-served-in-rustic-style.webp?a=1&b=1&s=612x612&w=0&k=20&c=tvukY1T5oMK5bC-ywpHDxp-K0DNxnqrev5HWLbsNrBY="
+  },
+  {
+    "id": 11,
+    "food_name": "Masala Dosa",
+    "ingredients": ["Rice Batter", "Potatoes", "Spices", "Oil"],
+    "food_type": "Veg",
+    "rating": 4.6,
+    "steps_to_prepare": [
+      "Spread batter",
+      "Add potato filling",
+      "Fold and serve"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFzYWxhJTIwZG9zYXxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "id": 12,
+    "food_name": "Chole Bhature",
+    "ingredients": ["Chickpeas", "Flour", "Onion", "Spices"],
+    "food_type": "Veg",
+    "rating": 4.5,
+    "steps_to_prepare": [
+      "Cook chickpeas",
+      "Fry bhature",
+      "Serve hot"
+    ],
+    "image_url": "https://media.istockphoto.com/id/1328524212/photo/katlambe-chole.webp?a=1&b=1&s=612x612&w=0&k=20&c=TAIktSQ7PNsrwBuf4UBWDC7HNxbHvRdX7R0R0mVqcdo="
+  },
+  {
+    "id": 13,
+    "food_name": "Butter Chicken",
+    "ingredients": ["Chicken", "Butter", "Tomato", "Cream", "Spices"],
+    "food_type": "Non-Veg",
+    "rating": 4.9,
+    "steps_to_prepare": [
+      "Cook chicken in tomato gravy",
+      "Add cream and butter",
+      "Serve with naan"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnV0dGVyJTIwY2hpY2tlbnxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "id": 15,
+    "food_name": "Chicken Biryani",
+    "ingredients": ["Chicken", "Basmati Rice", "Spices", "Yogurt", "Fried Onions"],
+    "food_type": "Non-Veg",
+    "rating": 4.8,
+    "steps_to_prepare": [
+      "Cook chicken with spices",
+      "Layer with rice and steam",
+      "Garnish and serve hot"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?w=700&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 19,
+    "food_name": "Fish Curry",
+    "ingredients": ["Fish", "Coconut Milk", "Spices", "Tamarind", "Onions"],
+    "food_type": "Non-Veg",
+    "rating": 4.4,
+    "steps_to_prepare": [
+      "Fry fish lightly",
+      "Cook coconut-spice gravy",
+      "Add fish and simmer"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1654863404432-cac67587e25d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmlzaCUyMGN1cnJ5fGVufDB8fDB8fHww"
+  },
+  {
+    "id": 20,
+    "food_name": "Palak Paneer",
+    "ingredients": ["Spinach", "Paneer", "Onions", "Garlic", "Spices"],
+    "food_type": "Veg",
+    "rating": 4.6,
+    "steps_to_prepare": [
+      "Blanch and puree spinach",
+      "Cook with spices and paneer",
+      "Simmer and serve with rice or roti"
+    ],
+    "image_url": "https://media.istockphoto.com/id/1250399530/photo/vegetarian-palak-paneer.webp?a=1&b=1&s=612x612&w=0&k=20&c=2euIGtU3mYxSOh3_23NS0K0b0lh3BooXrHU1y4Q2ZIA="
+  },
+  {
+    "id": 21,
+    "food_name": "Tandoori Chicken",
+    "ingredients": ["Chicken", "Yogurt", "Tandoori Masala", "Lemon", "Spices"],
+    "food_type": "Non-Veg",
+    "rating": 4.9,
+    "steps_to_prepare": [
+      "Marinate chicken in yogurt and spices",
+      "Grill until charred",
+      "Serve with onion rings and chutney"
+    ],
+    "image_url": "https://plus.unsplash.com/premium_photo-1695931841253-1e17e7ed59b5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGFuZG9vcmklMjBjaGlja2VufGVufDB8fDB8fHww"
+  },
+  {
+    "id": 23,
+    "food_name": "Thai Green Curry",
+    "ingredients": ["Coconut milk", "Green curry paste", "Basil", "Tofu", "Vegetables"],
+    "food_type": "Veg",
+    "rating": 4.6,
+    "steps_to_prepare": [
+      "Sauté curry paste in oil",
+      "Add coconut milk and vegetables",
+      "Simmer and add tofu and basil"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1668665772043-bdd32e348998?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGhhaSUyMGdyZWVuJTIwY3Vycnl8ZW58MHx8MHx8fDA%3D"
+  },
+  {
+    "id": 25,
+    "food_name": "Falafel Wrap",
+    "ingredients": ["Chickpeas", "Parsley", "Garlic", "Pita bread", "Tahini"],
+    "food_type": "Veg",
+    "rating": 4.3,
+    "steps_to_prepare": [
+      "Blend chickpeas with herbs and spices",
+      "Fry into balls",
+      "Wrap in pita with veggies and tahini"
+    ],
+    "image_url": "https://media.istockphoto.com/id/637026220/photo/vegan-wrap.webp?a=1&b=1&s=612x612&w=0&k=20&c=_qT7Lt4UbRb8BRdIrDAKMr0mgra-ttQy0w7VgaH7-cM="
+  },
+  {
+    "id": 26,
+    "food_name": "Chicken Teriyaki Bowl",
+    "ingredients": ["Chicken thighs", "Teriyaki sauce", "Rice", "Broccoli", "Sesame seeds"],
+    "food_type": "Non-Veg",
+    "rating": 4.8,
+    "steps_to_prepare": [
+      "Cook chicken with teriyaki sauce",
+      "Steam vegetables",
+      "Assemble over rice and garnish"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1598884805372-0059ec53cbdd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Q2hpY2tlbiUyMFRlcml5YWtpJTIwQm93bHxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "id": 27,
+    "food_name": "Margherita Pizza",
+    "ingredients": ["Pizza dough", "Tomato sauce", "Mozzarella", "Basil", "Olive oil"],
+    "food_type": "Veg",
+    "rating": 4.5,
+    "steps_to_prepare": [
+      "Roll dough and spread sauce",
+      "Add cheese and basil",
+      "Bake until crust is golden"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1551105018-7c047ef2c508?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWFyZ3JldGElMjBwaXp6YXxlbnwwfHwwfHx8MA%3D%3D"
+  },
+  {
+    "id": 28,
+    "food_name": "Fish Tacos",
+    "ingredients": ["White fish", "Tortillas", "Cabbage slaw", "Lime", "Spicy mayo"],
+    "food_type": "Non-Veg",
+    "rating": 4.4,
+    "steps_to_prepare": [
+      "Season and pan-fry fish",
+      "Prepare cabbage slaw",
+      "Assemble tacos with toppings"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1604467715878-83e57e8bc129?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmlzaCUyMHRhY29zfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 29,
+    "food_name": "Stuffed Bell Peppers",
+    "ingredients": ["Bell peppers", "Rice", "Tomatoes", "Beans", "Cheese"],
+    "food_type": "Veg",
+    "rating": 4.2,
+    "steps_to_prepare": [
+      "Prepare stuffing with rice and beans",
+      "Stuff the peppers",
+      "Bake and top with cheese"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1673646960062-9aeb2188335f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8U3R1ZmZlZCUyMEJlbGwlMjBQZXBwZXJzfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 30,
+    "food_name": "Shrimp Paella",
+    "ingredients": ["Shrimp", "Saffron rice", "Peas", "Bell peppers", "Garlic"],
+    "food_type": "Non-Veg",
+    "rating": 4.9,
+    "steps_to_prepare": [
+      "Sauté shrimp and vegetables",
+      "Add rice and saffron stock",
+      "Simmer until rice is cooked"
+    ],
+    "image_url": "https://images.unsplash.com/photo-1628677418806-6d820fbd8a7e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8U2hyaW1wJTIwUGFlbGxhfGVufDB8fDB8fHww"
+  }
+]

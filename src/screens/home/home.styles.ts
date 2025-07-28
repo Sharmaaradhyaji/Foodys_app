@@ -5,12 +5,7 @@ export const stylesHome = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 40,
-    margin: 20,
-  },
-  data: {
-    alignItems: 'flex-start',
-    gap: 20,
-    margin: 30,
+    margin: "20%",
   },
   text: {
     fontSize: 30,
@@ -24,6 +19,11 @@ export const stylesHome = StyleSheet.create({
     fontWeight: 'semibold',
     fontSize: 8,
     alignItems: 'flex-start',
-    backgroundColor: '#D3D3D3',
+    // backgroundColor: '#D3D3D3',
   },
+  vegToggle: {
+    flexDirection: 'row',
+    margin: "2%",
+    justifyContent: 'space-between'
+  }
 });

@@ -1,18 +1,13 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, useColorScheme } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { StackNavigator } from './src/components/Navigation';
+import { StackNavigator } from './src/navigation/navigation';
+import { stylesAll } from './src/globals/globals';
 
 const App = () => {
-  const theme = useColorScheme();
-  
-  const isDarkMode = theme === 'dark';
-
-  let backgroundColors = isDarkMode ? '#555' : 'white';
 
   return (
-    <SafeAreaView style={[styles.all, { backgroundColor: backgroundColors }]}>
+    <SafeAreaView style={stylesAll.all}>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>
@@ -21,9 +16,3 @@ const App = () => {
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  all: {
-    flex: 1,
-  },
-});
