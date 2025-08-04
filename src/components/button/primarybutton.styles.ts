@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     fontWeight: 'bold',
-    fontSize: width * 0.04, // ~15
+    fontSize: width * 0.04,
     color: 'white',
   },
 });

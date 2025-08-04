@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native';
 import { theme } from '../../globals/constants/constants';
+import { wp } from '../../globals/globals';
 
 export const stylesToggle = StyleSheet.create({
   toggleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: '#f5f5f5',
-    backgroundColor: theme.inputBoxColor,
+    backgroundColor: theme.whiteText,
     borderRadius: 20,
-    width: 220,
+    width: wp(49),
     elevation: 5, 
-    shadowColor: '#000',
+    shadowColor: theme.color000,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -31,8 +31,8 @@ export const stylesToggle = StyleSheet.create({
     backgroundColor: theme.activeNonVeg,
   },
   circle: {
-    width: 12,
-    height: 12,
+    width: (12),
+    height: (12),
     borderRadius: 6,
     marginRight: 6,
   },

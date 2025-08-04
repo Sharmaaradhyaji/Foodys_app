@@ -1,7 +1,7 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { StackNavigator } from './src/navigation/navigation';
+import { StackNavigator } from './src/navigation/stacknavigation';
 import { stylesAll } from './src/globals/globals';
 
 const App = () => {

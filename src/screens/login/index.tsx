@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { stylesLogin } from './login.styles';
-import PrimaryBtn from '../../components/button/primarybutton';
+import PrimaryBtn from '../../components/button';
 import { alertText, signinText } from '../../globals/constants/constants';
 import { Stacktype } from '../../types';
+import { specialChars } from '../../globals/globals';
 
 type Props = NativeStackScreenProps<Stacktype, 'Login'>;
 
@@ -14,13 +15,39 @@ const Login: React.FC<Props> = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    if ( !email || !password) {
-      const text = alertText.unfilledDetails
+    if (!email || !password) {
+      const text = alertText.unfilledDetails;
       Alert.alert(text);
       return;
     }
 
-    navigation.replace('Home', { email, password });
+    if (!email.includes('@') || email.lastIndexOf('.') < email.indexOf('@')) {
+      Alert.alert(signinText.validation.alertEmail);
+      return;
+    }
+
+    const hasSpecialChar = specialChars.some(char => password.includes(char));
+    if (!hasSpecialChar) {
+      Alert.alert(signinText.validation.alertPassword);
+      return;
+    }
+
+    if (password.length < 6) {
+      Alert.alert(signinText.validation.alertPasswordLength);
+      return;
+    }
+
+    navigation.replace('Start', {
+      screen: 'Home',
+      params: {
+        email,
+        password,
+        name: '',
+        place: '',
+        gender: '',
+        number: '',
+      },
+    });
   };
 
   const handleSignUp = () => {
@@ -30,8 +57,8 @@ const Login: React.FC<Props> = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={stylesLogin.Box}>
-      <Text style={stylesLogin.heading}>{signinText.Heading}</Text>
-      <Text style={stylesLogin.para}>{signinText.subHeading}</Text>
+        <Text style={stylesLogin.heading}>{signinText.Heading}</Text>
+        <Text style={stylesLogin.para}>{signinText.subHeading}</Text>
 
         <TextInput
           placeholder={signinText.placeHolders.email}

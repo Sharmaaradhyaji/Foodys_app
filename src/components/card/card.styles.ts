@@ -1,30 +1,31 @@
 import { StyleSheet } from 'react-native';
-import { height, width } from '../../globals/globals';
+import { height, hp, width, wp } from '../../globals/globals';
 import { theme } from '../../globals/constants/constants';
 
 export const stylesCard = StyleSheet.create({
   card: {
-    width: width * 0.46,
-    height: height * 0.3,
+    width: wp('45%'),
+    height: height * 0.28,
     backgroundColor: theme.cardColor,
     margin: width * 0.01,
+    // marginBottom: width * 0.01,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 24,
     borderBottomLeftRadius: 0,
-    padding: 1,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
+    padding: hp(0.2),
+    elevation: 14,
+    shadowColor: theme.color000,
+    shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 3 },
   },
   image: {
-    height: height * 0.2,
+    height: hp('19%'),
     borderRadius: 18,
-    marginBottom: height * 0.01,
-    width: '92%',
+    marginBottom: height * 0.009,
+    width: wp('42%'),
     alignSelf: 'center',
-    margin: '4%',
+    margin: wp('0.5%'),
     borderTopLeftRadius: 24,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 24,
@@ -36,26 +37,24 @@ export const stylesCard = StyleSheet.create({
   upperData: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: '5%',
+    paddingHorizontal: hp('1%'),
     alignItems: 'center',
   },
   title: {
-    fontSize: height * 0.022,
+    fontSize: height * 0.021,
     fontWeight: '600',
-    color: '#333',
-    marginBottom: height * 0.01,
-    maxWidth: '72%',
-    overflow: 'hidden',
+    color: theme.color333,
+    // marginBottom: height * 0.01,
+    maxWidth: wp('30%'),
   },
   ratingRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: height * 0.008,
+    // marginBottom: height * 0.005,
   },
   ratingText: {
     fontSize: height * 0.02,
-    marginLeft: 4,
-    color: '#555',
+    marginLeft: wp(1),
+    color: theme.color555,
   },
-
 });

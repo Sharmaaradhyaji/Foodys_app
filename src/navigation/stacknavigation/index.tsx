@@ -1,31 +1,38 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Signup from '../screens/signup/signup';
-import Login from '../screens/login/login';
-import Home from '../screens/home/home';
-import Profile from '../screens/profile/profile';
-import { Stacktype } from '../types';
+import Signup from '../../screens/signup';
+import Login from '../../screens/login';
+import Home from '../../screens/home';
+import Profile from '../../screens/profile';
+import { Stacktype } from '../../types';
+import Product from '../../screens/product';
+import TabNavigator from '../tabnavigation';
 
 const Stack = createNativeStackNavigator<Stacktype>();
 
 export const StackNavigator = () => (
-  <Stack.Navigator initialRouteName="Signup">
+  <Stack.Navigator initialRouteName="Login">
     <Stack.Screen
       name="Signup"
       component={Signup}
       options={{ headerShown: false }}
-      />
+    />
     <Stack.Screen
       name="Login"
       component={Login}
       options={{ headerShown: false }}
-      />
+    />
     <Stack.Screen
-      name="Home"
-      component={Home}
+      name="Start"
+      component={TabNavigator}
       options={{
         headerShown: false,
         gestureEnabled: false,
       }}
+    />
+      <Stack.Screen
+        name="Product"
+        component={Product}
+        options={{ headerShown: false }}
       />
     <Stack.Screen
       name="Profile"

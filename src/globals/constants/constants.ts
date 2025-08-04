@@ -8,6 +8,11 @@ export const signinText = {
     password: 'Enter password',
   },
   submitButton: 'Submit',
+  validation: {
+    alertEmail: 'Enter a valid email address',
+    alertPassword: 'Password must include at least one special character: #, $, *, or %',
+    alertPasswordLength: 'Password must be at least 6 characters long'
+  }
 };
 
 export const signupText = {
@@ -29,11 +34,26 @@ export const signupText = {
     password: 'Password',
   },
   submitButton: 'Submit',
+  validation: {
+    nameLength: 'Name must be at least 3 characters long',
+    validEmail: 'Enter a valid email address',
+    validNumber: 'Enter a valid 10-digit phone number',
+    specialCharPassword: 'Password must include at least one special character',
+    passwordLength: 'Password must be at least 6 characters long',
+    placeLength: 'Place must be at least 3 characters long'
+  }
 };
+
+export const profile = {
+  alertLogoutSelect: 'Logged out', 
+  alertLogoutConfirm: 'You have been logged out successfully.'
+}
 
 export const alertText = {
   unfilledDetails: 'Please fill all fields',
 };
+
+export const columnWrapperStyles = { justifyContent: 'space-between' }
 
 export const homeText = {
   Heading1: 'Still Hungry?',
@@ -59,7 +79,15 @@ export const theme = {
   nonvegColor: 'red',
   activeVeg: '#e6ffe6',
   activeNonVeg: '#ffe6e6',
-  whiteText: '#fff'
+  whiteText: '#fff',
+  shadowColor: '#888',
+  greenDot: '🟢',
+  redDot: '🔴',
+  color000: '#000',
+  color333: '#333',
+  color444: '#444',
+  color555: '#555',
+  buttonBG: 'rgba(0,0,0,0.4)'
 };
 
 export const stringConstants = {
@@ -71,3 +99,9 @@ export const profileText = {
     Heading: 'Your Profile',
     logoutButton: 'Logout'
 }
+
+export const gradientColors = ['#fff1cc', '#fa9420', '#dd6a00']
+
+export const HeadingColorGradient = ['#fdbb2d', '#fa9420', '#e96443']
+
+export const imageBgGradient= ['rgba(0,0,0,0.4)', 'transparent']

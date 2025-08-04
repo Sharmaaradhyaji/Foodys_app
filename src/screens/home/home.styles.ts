@@ -1,29 +1,54 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
+import { hp, wp } from '../../globals/globals';
+import { theme } from '../../globals/constants/constants';
 
 export const stylesHome = StyleSheet.create({
+  container: {
+    backgroundColor: theme.cardColor,
+    marginBottom: hp(8),
+  },
+  hero: {
+    borderRadius: 40,
+    padding: hp(1),
+    margin: hp(1),
+    elevation: 11,
+  },
   heading: {
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 40,
-    margin: "20%",
+    margin: hp('10%'),
+  },
+  headText: {
+    fontWeight: '500',
+    fontSize: hp(3),
+    margin: hp(1.2),
   },
   text: {
-    fontSize: 30,
+    fontSize: hp(1),
     fontWeight: 'semibold',
   },
   Box: {
-    margin: '8%',
+    margin: hp('2%'),
     borderRadius: 20,
-    padding: 10,
+    padding: hp(2),
     gap: 10,
     fontWeight: 'semibold',
     fontSize: 8,
     alignItems: 'flex-start',
-    // backgroundColor: '#D3D3D3',
   },
   vegToggle: {
     flexDirection: 'row',
-    margin: "2%",
-    justifyContent: 'space-between'
-  }
+    margin: hp('2%'),
+    justifyContent: 'space-between',
+  },
+  cardView: {
+    marginBottom: hp('4%')
+  },
+  contentContainer: {
+    padding: wp(1),
+  },
+  columnWrapper: {
+    justifyContent: 'space-around',
+  },
 });

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { height, width } from '../../globals/globals';
+import { height, hp, width, wp } from '../../globals/globals';
 import { theme } from '../../globals/constants/constants';
 
 
@@ -9,38 +9,33 @@ export const stylesSignUp = StyleSheet.create({
     marginBottom: height * 0.01,
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: width * 0.07,
+    fontSize: hp(4),
   },
   Box: {
-    margin: '7%',
+    margin: hp('4%'),
     marginTop: height * 0.02,
-    marginBottom: '2%',
+    marginBottom: hp('4%'),
     borderRadius: 50,
     gap: height * 0.02,
     padding: '5%',
     backgroundColor: theme.boxColorOverPage,
     elevation: 4,
-    shadowColor: '#000',
+    shadowColor: theme.shadowColor,
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 3 },
   },
   inputBox: {
-    width: '100%',
+    width: wp('70%'),
     height: height * 0.07,
     backgroundColor: theme.inputBoxColor,
     borderRadius: 30,
     paddingHorizontal: width * 0.06,
-    justifyContent: 'center',
+    alignSelf: 'center',
     fontSize: height * 0.02,
   },
   Text: {
     fontWeight: 'bold',
-    fontSize: width * 0.05, // ~20,
-  },
-  TextGender: {
-    marginLeft: '3%',
-    fontWeight: 'bold',
-    fontSize: width * 0.05,
+    fontSize: width * 0.05, 
   },
   para: {
     fontWeight: 'medium',
@@ -50,7 +45,8 @@ export const stylesSignUp = StyleSheet.create({
   radio: { 
     flexDirection: 'row', 
     gap: 7, 
-    alignItems: 'center' 
+    alignItems: 'center',
+    alignSelf: 'center' 
   },
   submitBtn: {
     marginTop: height * 0.01,
@@ -60,12 +56,12 @@ export const stylesSignUp = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    width: '70%',
+    width: wp('10%'),
   },
   BtnText: {
     fontWeight: 'bold',
-    fontSize: width * 0.04, // ~15
-    color: 'white',
+    fontSize: width * 0.04,
+    color: theme.cardColor,
   },
   textLogin: {
     fontWeight: 'bold',
@@ -75,14 +71,14 @@ export const stylesSignUp = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    width: '60%',
-    color: 'black',
+    width: wp('50%'),
+    color: theme.themeSecondaryBlack,
   },
   link: {
     textAlign: 'center',
     fontSize: width * 0.04,
     color: theme.themePrimaryOrange,
     textDecorationLine: 'underline',
-    marginBottom: '4%'
+    marginBottom: hp(1)
   },
 });

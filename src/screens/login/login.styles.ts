@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { height, width } from '../../globals/globals';
+import { height, hp, width, wp } from '../../globals/globals';
 import { theme } from '../../globals/constants/constants';
 
 export const stylesLogin = StyleSheet.create({
@@ -10,53 +10,49 @@ export const stylesLogin = StyleSheet.create({
     fontSize: width * 0.07,
   },
   Box: {
-    margin: '7%',
+    margin: hp('4%'),
     marginTop: height * 0.07,
     borderRadius: 50,
     gap: height * 0.02,
-    padding: '5%',
+    padding: hp('4%'),
     backgroundColor: theme.boxColorOverPage,
     elevation: 4,
-    shadowColor: '#000',
+    shadowColor: theme.color000,
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 3 },
   },
   inputBox: {
-    width: '100%',
+    width: wp('70%'),
     height: height * 0.07,
     backgroundColor: theme.inputBoxColor,
     borderRadius: 30,
     paddingHorizontal: width * 0.06,
     justifyContent: 'center',
+    alignSelf: 'center',
     fontSize: height * 0.02,
-  },
-  TextGender: {
-    marginLeft: '3%',
-    fontWeight: 'bold',
-    fontSize: width * 0.05,
   },
   para: {
     fontWeight: 'medium',
     fontSize: width * 0.05,
     textAlign: 'center',
-    marginBottom: "9%"
+    marginBottom: hp("2%")
   },
   textLogin: {
     fontWeight: 'bold',
     fontSize: width * 0.04,
     marginTop: height * 0.02,
-    // marginLeft: '20%',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    width: '60%',
-    color: 'black',
+    width: wp('70%'),
+    color: theme.themeSecondaryBlack,
   },
   link: {
     textAlign: 'center',
     fontSize: width * 0.04,
     color: theme.themePrimaryOrange,
     textDecorationLine: 'underline',
+  marginBottom: hp(0.9)
   },
 });
