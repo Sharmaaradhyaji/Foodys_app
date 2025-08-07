@@ -30,7 +30,7 @@ export const signupText = {
     email: 'Email',
     number: 'Number',
     place: 'Place',
-    gender: 'Select Gender:',
+    gender: 'Gender:',
     password: 'Password',
   },
   submitButton: 'Submit',
@@ -67,7 +67,7 @@ export const navbarText = {
 };
 
 export const theme = {
-  boxColorOverPage: '#F5F5F5',
+  boxColorOverPage: '#F8F8F8',
   inputBoxColor: '#C0C0C0',
   themePrimaryOrange: '#FF7722',
   themeSecondaryBlack: '#2c3e50',

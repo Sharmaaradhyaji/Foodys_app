@@ -7,10 +7,13 @@ import PrimaryBtn from '../../components/button';
 import { alertText, signinText } from '../../globals/constants/constants';
 import { Stacktype } from '../../types';
 import { specialChars } from '../../globals/globals';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/authSlice';
 
 type Props = NativeStackScreenProps<Stacktype, 'Login'>;
 
 const Login: React.FC<Props> = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -37,16 +40,11 @@ const Login: React.FC<Props> = ({ navigation }) => {
       return;
     }
 
+    dispatch(login({ email, password }));
+
     navigation.replace('Start', {
       screen: 'Home',
-      params: {
-        email,
-        password,
-        name: '',
-        place: '',
-        gender: '',
-        number: '',
-      },
+      params: { email, password },
     });
   };
 
@@ -71,6 +69,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
           placeholder={signinText.placeHolders.password}
           value={password}
           onChangeText={setPassword}
+          secureTextEntry
           style={stylesLogin.inputBox}
         />
 

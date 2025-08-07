@@ -1,34 +1,42 @@
+// searchbar.styles.ts
+
 import { StyleSheet } from 'react-native';
-import { height, width } from '../../globals/globals';
-import { theme } from '../../globals/constants/constants';
+import { height, width, wp, hp } from '../../globals/globals'; 
 
-export const stylesSearchbar = StyleSheet.create({
-  container: {
-    margin: '2%',
-    marginTop: '1%',
-    marginBottom: '1%',
-    gap: height * 0.01,
-    padding: '1%',
-  },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: theme.cardColor,
-    borderRadius: 30,
-    paddingHorizontal: width * 0.04,
-    height: height * 0.07,
-    elevation: 10,
-    shadowColor: theme.shadowColor,
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 3 },
-  },
-  icon: {
-    marginRight: width * 0.02,
-  },
-  inputBox: {
-    flex: 1,
-    fontSize: height * 0.02,
-    color: theme.color333,
-  },
-});
-
+export const createSearchbarStyles = (colors: {
+  secondaryBackground: string
+  shadowColor: string
+  text: string
+}) =>
+  StyleSheet.create({
+    container: {
+      margin: wp('2%'),
+      marginTop: hp('1%'),
+      marginBottom: hp('1%'),
+      gap: hp('1%'),
+      padding: wp('1%'),
+    },
+    inputWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.secondaryBackground,
+      borderRadius: 30,
+      paddingHorizontal: wp('4%'),
+      height: hp('7%'),
+      elevation: 10,
+      shadowColor: colors.shadowColor,
+      shadowOpacity: 0.2,
+      shadowOffset: { width: 0, height: 3 },
+    },
+    icon: {
+      marginRight: wp('2%'),
+    },
+    inputBox: {
+      flex: 1,
+      fontSize: hp('2%'),
+      color: colors.text,
+    },
+    iconColor: {
+      color: colors.text
+    }
+  });

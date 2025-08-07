@@ -22,17 +22,24 @@ import Details from '../../components/profiledetails';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 type Props = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, 'Profile'>,
   NativeStackScreenProps<Stacktype>
 >;
 
-const Profile: React.FC<Props> = ({ route, navigation }) => {
-  const { name, email, number, gender, place } = route.params || {};
+const Profile: React.FC<Props> = ({ navigation }) => {
+  const { name, email, number, gender, place } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   const handleLogout = () => {
     Alert.alert(profile.alertLogoutSelect, profile.alertLogoutConfirm, [
+      {
+        text: 'cancel',
+      },
       {
         text: 'ok',
         onPress: () => navigation.replace('Signup'),

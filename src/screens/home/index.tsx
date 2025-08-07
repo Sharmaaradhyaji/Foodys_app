@@ -1,49 +1,56 @@
 import {
   View,
   FlatList,
-  useWindowDimensions,
-  TouchableOpacity,
+  Text,
+  Pressable,
 } from 'react-native';
 import React, { useState } from 'react';
 import Navbar from '../../components/navbar';
 import Card from '../../components/card';
-import Heading from '../../components/heading';
-import foodData from '../../utils/fooddata/data.json';
-import { navbarStyles } from '../../components/navbar/navbar.styles';
 import { Toggle } from '../../components/circleToggle';
-import { stylesHome } from './home.styles';
+import { createHomeStyles } from './home.styles';
 import SearchBar from '../../components/searchbar';
-import { gradientColors, homeText } from '../../globals/constants/constants';
-import { HomeScreenProps, Stacktype, TabParamList } from '../../types';
+import { homeText } from '../../globals/constants/constants';
+import { HomeScreenProps } from '../../types';
 import LinearGradient from 'react-native-linear-gradient';
+import { hp, wp } from '../../globals/globals';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import Icon from 'react-native-vector-icons/Ionicons';
+import * as Animatable from 'react-native-animatable';
 
-const Home: React.FC<HomeScreenProps> = ({ route, navigation }) => {
-  const { width, height } = useWindowDimensions();
-  const isPortrait = height >= width;
-  const numColumns = isPortrait ? 2 : 3;
-
-  const [vegOnly, setVegOnly] = useState<'veg' | 'nonveg'>('veg');
-
-  const toggleVegNonVeg = () => {
-    setVegOnly(prev => (prev === 'veg' ? 'nonveg' : 'veg'));
+const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const theme = useSelector((state: RootState) => state.theme.colors);
+  const colors = {
+    ...theme,
+    themePrimaryOrange: theme.primary,
   };
+  const gradientColors = theme.gradient
+
+  const stylesHome = createHomeStyles(colors);
+  const [vegOnly, setVegOnly] = useState<'Veg' | 'Non-Veg'>('Veg');
+
+  const foods = useSelector((state: RootState) => state.food.foods);
 
   const filteredData =
-    vegOnly === 'veg'
-      ? foodData.filter(item => item.food_type === 'Veg')
-      : foodData.filter(item => item.food_type === 'Non-Veg');
+    vegOnly === 'Veg'
+      ? foods.filter(item => item.food_type === 'Veg')
+      : foods.filter(item => item.food_type === 'Non-Veg');
 
   return (
-    <View style={stylesHome.container}>
-      <Navbar navigation={navigation} params={route.params} />
+    <View style={[stylesHome.container]}>
+      <Navbar />
+
       <FlatList
         data={filteredData}
         keyExtractor={item => item.id.toString()}
-        numColumns={numColumns}
-        key={numColumns}
+        numColumns={2}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={stylesHome.contentContainer}
-        columnWrapperStyle={stylesHome.columnWrapper}
+        contentContainerStyle={{
+          paddingTop: hp('12%'),
+          paddingHorizontal: wp(4),
+        }}
+        columnWrapperStyle={{ gap: wp(2) }}
         ListHeaderComponent={
           <>
             <LinearGradient
@@ -52,24 +59,42 @@ const Home: React.FC<HomeScreenProps> = ({ route, navigation }) => {
               end={{ x: 1, y: 1 }}
               style={stylesHome.hero}
             >
-              <View style={stylesHome.vegToggle}>
+              <View style={stylesHome.heroContainer}>
                 <View>
-                  <Heading
-                    text={homeText.Heading1}
-                    styles={stylesHome.headText}
-                  />
-                  <Heading
-                    text={homeText.Heading2}
-                    styles={stylesHome.headText}
-                  />
+                  <Text style={stylesHome.headText}>{homeText.Heading1}</Text>
+
+                  <Animatable.Text
+                    animation="pulse"
+                    easing="ease-out"
+                    duration={800}
+                    delay={200}
+                    iterationCount="infinite"
+                    iterationDelay={3000}
+                    style={stylesHome.headText}
+                  >
+                    {homeText.Heading2}
+                  </Animatable.Text>
                 </View>
+
+                <Animatable.View
+                  animation="tada"
+                  iterationCount="infinite"
+                  duration={7000}
+                  easing="linear"
+                >
+                  <Icon
+                    name="fast-food-outline"
+                    size={140}
+                    color="white"
+                    style={stylesHome.heroIcon}
+                  />
+                </Animatable.View>
               </View>
+
               <SearchBar placeholder={homeText.placeholderSearch} />
             </LinearGradient>
-            <Heading text={homeText.Heading3} styles={stylesHome.headText} />
-            <View
-              style={navbarStyles.toggler}
-            >
+
+            <View style={stylesHome.vegToggle}>
               <Toggle selected={vegOnly} onSelect={setVegOnly} />
             </View>
           </>
@@ -84,11 +109,17 @@ const Home: React.FC<HomeScreenProps> = ({ route, navigation }) => {
               ingredients={item.ingredients}
               steps_to_prepare={item.steps_to_prepare}
               navigate={navigation.navigate}
-              food_type={vegOnly}
+              food_type={item.food_type}
             />
           </View>
         )}
       />
+      <Pressable
+        onPress={() => navigation.navigate('AddFood')}
+        style={stylesHome.addFavFood}
+      >
+        <Icon name="add" size={30} color="white" />
+      </Pressable>
     </View>
   );
 };

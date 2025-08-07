@@ -1,54 +1,73 @@
 import { StyleSheet } from 'react-native';
 import { hp, wp } from '../../globals/globals';
-import { theme } from '../../globals/constants/constants';
 
-export const stylesHome = StyleSheet.create({
-  container: {
-    backgroundColor: theme.cardColor,
-    marginBottom: hp(8),
-  },
-  hero: {
-    borderRadius: 40,
-    padding: hp(1),
-    margin: hp(1),
-    elevation: 11,
-  },
-  heading: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 40,
-    margin: hp('10%'),
-  },
-  headText: {
-    fontWeight: '500',
-    fontSize: hp(3),
-    margin: hp(1.2),
-  },
-  text: {
-    fontSize: hp(1),
-    fontWeight: 'semibold',
-  },
-  Box: {
-    margin: hp('2%'),
-    borderRadius: 20,
-    padding: hp(2),
-    gap: 10,
-    fontWeight: 'semibold',
-    fontSize: 8,
-    alignItems: 'flex-start',
-  },
-  vegToggle: {
-    flexDirection: 'row',
-    margin: hp('2%'),
-    justifyContent: 'space-between',
-  },
-  cardView: {
-    marginBottom: hp('4%')
-  },
-  contentContainer: {
-    padding: wp(1),
-  },
-  columnWrapper: {
-    justifyContent: 'space-around',
-  },
-});
+export const createHomeStyles = (colors: {
+  background: string;
+  text: string;
+  cardColor: string;
+  themePrimaryOrange: string;
+}) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    hero: {
+      borderTopLeftRadius: wp(9),
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: wp(9),
+      borderBottomLeftRadius: 0,
+      padding: hp(1),
+      marginHorizontal: hp(1),
+      elevation: 11,
+      alignSelf: 'center',
+      width: '94%',
+    },
+    headText: {
+      fontWeight: '500',
+      fontSize: hp(3),
+      margin: hp(1.2),
+      color: colors.text,
+    },
+    vegToggle: {
+      flexDirection: 'row',
+      margin: hp('3%'),
+      justifyContent: 'space-between',
+      alignSelf: 'center',
+      width: wp('50%'),
+    },
+    heroContainer: {
+      flexDirection: 'row',
+      margin: hp(2),
+      justifyContent: 'space-between',
+    },
+    cardView: {
+      flex: 1,
+      marginBottom: hp(9),
+    },
+    columnWrapper: {
+      gap: wp(1),
+    },
+    heroIcon: {
+      position: 'absolute',
+      right: -11,
+      top: -11,
+      zIndex: 0,
+      padding: 10,
+      opacity: 0.15,
+      color: 'white',
+    },
+    addFavFood: {
+      position: 'absolute',
+      alignSelf: 'center',
+      bottom: hp(7),
+      backgroundColor: colors.themePrimaryOrange,
+      borderRadius: 25,
+      width: 50,
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      elevation: 5,
+      zIndex: 99,
+    },
+  });

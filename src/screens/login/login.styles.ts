@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { height, hp, width, wp } from '../../globals/globals';
+import { height, hp, lightTheme, width, wp } from '../../globals/globals';
 import { theme } from '../../globals/constants/constants';
 
 export const stylesLogin = StyleSheet.create({
@@ -15,7 +15,7 @@ export const stylesLogin = StyleSheet.create({
     borderRadius: 50,
     gap: height * 0.02,
     padding: hp('4%'),
-    backgroundColor: theme.boxColorOverPage,
+    backgroundColor: lightTheme.secondaryBackground,
     elevation: 4,
     shadowColor: theme.color000,
     shadowOpacity: 0.1,

@@ -1,42 +1,44 @@
 import { StyleSheet } from 'react-native';
 import { height, hp, width, wp } from '../../globals/globals';
-import { theme } from '../../globals/constants/constants';
 
-export const navbarStyles = StyleSheet.create({
+export const createNavbarStyles = (colors: {
+  background: string;
+  text: string;
+  cardColor: string;
+  themePrimaryOrange: string;
+  secondaryBackground: string
+  shadowColor: string
+}) => StyleSheet.create({
   all: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: wp('2%'),
-    marginTop: height * 0.02,
-    paddingVertical: hp('2%'),
-    paddingHorizontal: hp("1%"),
-    backgroundColor: theme.whiteText,
-    borderRadius: 16,
-    elevation: 20,
-    shadowColor: theme.color000,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 16,
+    paddingVertical: hp('2.5%'),
+    paddingHorizontal: wp('4%'),
+    backgroundColor: colors.secondaryBackground,
+    elevation: 17,
+    shadowColor: colors.shadowColor,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
   },
   iconBox: {
-    width: width * 0.14,
+    width: width * 0.12,
     height: height * 0.05,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  toggler: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: hp(2)
+    borderRadius: 50,
   },
   heading: {
     flex: 1,
-    fontSize: height * 0.028,
-    fontWeight: 'bold',
-    marginHorizontal: wp(2),
+    fontSize: height * 0.03,
+    fontWeight: '700',
+    letterSpacing: 1,
+    textAlign: 'center',
   },
-  iconProfile: {
-
-  }
 });

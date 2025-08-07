@@ -4,16 +4,9 @@ import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-naviga
 
 export type Stacktype = {
   Signup: undefined;
-  Start: NavigatorScreenParams<TabParamList>
+  Start: NavigatorScreenParams<TabParamList>;
   Login: undefined;
-  Profile: {
-    name?: string;
-    place?: string;
-    gender?: string;
-    email: string;
-    number?: string;
-    password: string;
-  };
+  Profile: UserData;
   Product: {
     id: number;
     title: string;
@@ -21,29 +14,16 @@ export type Stacktype = {
     rating: number;
     ingredients: string[];
     steps_to_prepare: string[];
-    food_type: string
+    food_type: 'Veg' | 'Non-Veg'
   };
+  AddFood: undefined
 };
 
 export type TabParamList = {
-  Home: {
-    name?: string;
-    place?: string;
-    gender?: string;
-    email: string;
-    number?: string;
-    password: string;
-  };
-  Profile: {
-    name?: string;
-    email?: string;
-    number?: string;
-    gender?: string;
-    place?: string;
-  };
+  Home: UserData;
+  Profile: Partial<UserData>;
   FavoriteFood: undefined;
 };
-
 
 export interface cardProps {
   id: number;
@@ -53,7 +33,7 @@ export interface cardProps {
   ingredients: string[];
   steps_to_prepare: string[];
   navigate: NativeStackNavigationProp<Stacktype, 'Product'>['navigate'];
-  food_type: string
+  food_type: 'Veg' | 'Non-Veg'
 }
 
 export type HomeScreenProps = CompositeScreenProps<
@@ -65,7 +45,6 @@ export type navbarProps = {
   navigation: HomeScreenProps['navigation'];
   params: TabParamList['Home'];
 };
-
 
 export interface PrimaryBtnProps {
   title?: string;
@@ -81,8 +60,8 @@ export interface cardProps {
 }
 
 export interface toggleProps {
-  selected: 'veg' | 'nonveg';
-  onSelect: (value: 'veg' | 'nonveg') => void;
+  selected: 'Veg' | 'Non-Veg';
+  onSelect: (value: 'Veg' | 'Non-Veg') => void;
 }
 
 export interface headingProps {
@@ -92,4 +71,23 @@ export interface headingProps {
 
 export interface searchBar {
   placeholder: string;
+}
+
+export interface UserData {
+  name?: string;
+  place?: string;
+  gender?: string;
+  email: string;
+  number?: string;
+  password: string;
+}
+
+export interface FavFoodCard{
+  id: number;
+  title: string;
+  image: string;
+  rating: number;
+  ingredients: string[];
+  steps_to_prepare: string[];
+  food_type: 'Veg' | 'Non-Veg'
 }

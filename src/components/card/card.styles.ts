@@ -1,60 +1,64 @@
+// card.styles.ts
 import { StyleSheet } from 'react-native';
-import { height, hp, width, wp } from '../../globals/globals';
-import { theme } from '../../globals/constants/constants';
+import { hp, wp } from '../../globals/globals';
 
-export const stylesCard = StyleSheet.create({
+export const createCardStyles = (
+  colors: {
+    secondaryBackground: string;
+  text: string;
+  cardColor: string;
+  themePrimaryOrange: string;
+  shadowColor: string
+  }
+) => StyleSheet.create({
   card: {
-    width: wp('45%'),
-    height: height * 0.28,
-    backgroundColor: theme.cardColor,
-    margin: width * 0.01,
-    // marginBottom: width * 0.01,
-    borderTopLeftRadius: 24,
+    flex: 1,
+    backgroundColor: colors.secondaryBackground,
+    borderTopLeftRadius: wp(6),
     borderTopRightRadius: 0,
-    borderBottomRightRadius: 24,
+    borderBottomRightRadius: wp(6),
     borderBottomLeftRadius: 0,
-    padding: hp(0.2),
-    elevation: 14,
-    shadowColor: theme.color000,
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 3 },
+    padding: hp(1.4),
+    elevation: 11,
+    shadowColor: colors.shadowColor,
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: hp(0.4) },
   },
   image: {
-    height: hp('19%'),
-    borderRadius: 18,
-    marginBottom: height * 0.009,
-    width: wp('42%'),
-    alignSelf: 'center',
-    margin: wp('0.5%'),
-    borderTopLeftRadius: 24,
+    height: hp('20%'),
+    width: '100%',
+    borderTopLeftRadius: wp(6),
     borderTopRightRadius: 0,
-    borderBottomRightRadius: 24,
+    borderBottomRightRadius: wp(6),
     borderBottomLeftRadius: 0,
+    marginBottom: hp(1),
+    resizeMode: 'cover',
   },
   data: {
     justifyContent: 'space-between',
+    paddingVertical: hp(1),
   },
   upperData: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: hp('1%'),
+    paddingHorizontal: wp(1),
     alignItems: 'center',
   },
   title: {
-    fontSize: height * 0.021,
+    fontSize: hp(2.1),
     fontWeight: '600',
-    color: theme.color333,
-    // marginBottom: height * 0.01,
-    maxWidth: wp('30%'),
+    color: colors.text,
+    padding: wp(0.1),
+    flexShrink: 1,
   },
   ratingRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginBottom: height * 0.005,
+    margin: wp(0.2),
   },
   ratingText: {
-    fontSize: height * 0.02,
+    fontSize: hp(2),
     marginLeft: wp(1),
-    color: theme.color555,
+    color: colors.text,
   },
 });

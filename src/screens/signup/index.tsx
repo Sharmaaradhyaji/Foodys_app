@@ -1,4 +1,12 @@
-import { Alert, Pressable, ScrollView, Text, View, TextInput } from 'react-native';
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RadioButton } from 'react-native-paper';
@@ -11,10 +19,14 @@ import {
 } from '../../globals/constants/constants';
 import { Stacktype } from '../../types';
 import { specialChars } from '../../globals/globals';
+import { useDispatch } from 'react-redux';
+import { signup } from '../../store/authSlice';
 
 type Props = NativeStackScreenProps<Stacktype, 'Signup'>;
 
 const Signup: React.FC<Props> = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
@@ -65,9 +77,10 @@ const Signup: React.FC<Props> = ({ navigation }) => {
     const isPasswordValid = checkPassword();
 
     if (isDetailsValid && isPasswordValid) {
+      dispatch(signup({ name, email, number, gender, place, password }));
       navigation.replace('Start', {
         screen: 'Home',
-        params: { name, email, gender, number, place, password },
+        params: { name, email, number, gender, place, password },
       });
     }
   };
@@ -112,22 +125,30 @@ const Signup: React.FC<Props> = ({ navigation }) => {
           style={stylesSignUp.inputBox}
         />
 
-        <View style={stylesSignUp.radio}>
-          <RadioButton.Android
-            value="option1"
-            status={gender === signupText.radio.male ? 'checked' : 'unchecked'}
-            onPress={() => setGender(signupText.radio.male)}
-            color={theme.choiceThemeRadio}
-          />
-          <Text style={stylesSignUp.Text}>{signupText.radio.male}</Text>
+        <View style={stylesSignUp.radioGroup}>
+          <TouchableOpacity
+            style={stylesSignUp.radioOption}
+            onPress={() => setGender('Male')}
+            activeOpacity={0.9}
+          >
+            <View style={stylesSignUp.radioCircle}>
+              {gender === 'Male' && <View style={stylesSignUp.radioSelected} />}
+            </View>
+            <Text style={stylesSignUp.radioLabel}>Male</Text>
+          </TouchableOpacity>
 
-          <RadioButton.Android
-            value="option2"
-            status={gender === signupText.radio.female ? 'checked' : 'unchecked'}
-            onPress={() => setGender(signupText.radio.female)}
-            color={theme.choiceThemeRadio}
-          />
-          <Text style={stylesSignUp.Text}>{signupText.radio.female}</Text>
+          <TouchableOpacity
+            style={stylesSignUp.radioOption}
+            onPress={() => setGender('Female')}
+            activeOpacity={0.9}
+          >
+            <View style={stylesSignUp.radioCircle}>
+              {gender === 'Female' && (
+                <View style={stylesSignUp.radioSelected} />
+              )}
+            </View>
+            <Text style={stylesSignUp.radioLabel}>Female</Text>
+          </TouchableOpacity>
         </View>
 
         <TextInput

@@ -6,10 +6,10 @@ export const ingredientStyles = StyleSheet.create({
     container: {
         backgroundColor: theme.themePrimaryOrange,
         margin: hp(1),
-        borderRadius: 400,
+        borderRadius: 30,
         height: hp(5),
-        paddingLeft: 24,
-        paddingRight: 24,
+        paddingLeft: wp(4),
+        paddingRight: wp(4),
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 9,

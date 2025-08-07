@@ -1,16 +1,8 @@
-import React, { useState } from 'react';
-import {
-  Text,
-  Image,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  TouchableHighlight,
-  StyleSheet,
-} from 'react-native';
+import React from 'react';
+import { Text, Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Stacktype } from '../../types';
-import { productStyles } from './product.styles';
+import { createProductStyles } from './product.styles';
 import Heading from '../../components/heading';
 import Ingredients from '../../components/ingredients';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,18 +12,49 @@ import {
   imageBgGradient,
   theme,
 } from '../../globals/constants/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { addFavorite, removeFavorite } from '../../store/favoriteFood';
 
 type Props = NativeStackScreenProps<Stacktype, 'Product'>;
 
-const Product: React.FC<Props> = ({ route, navigation }) => {
-  const { title, image, ingredients, steps_to_prepare, rating, food_type } = route.params;
-  const [liked, setLiked] = useState(false);
+const Product: React.FC<Props> = ({ route }) => {
+  const { colors } = useSelector((state: RootState) => state.theme);
+  const productStyles = createProductStyles(colors);
+
+  const { id, title, image, ingredients, steps_to_prepare, rating, food_type } =
+    route.params;
+
+  const dispatch = useDispatch();
+  const favorites = useSelector(
+    (state: RootState) => state.favoriteFood.favorites,
+  );
+
+  const isFavorite = favorites.some(f => f.id === id);
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFavorite(id));
+    } else {
+      dispatch(
+        addFavorite({
+          id,
+          food_name: title,
+          image_url: image,
+          rating,
+          ingredients,
+          steps_to_prepare,
+          food_type,
+        }),
+      );
+    }
+  };
 
   return (
     <>
       <ScrollView style={productStyles.container}>
         <LinearGradient
-          colors={HeadingColorGradient}
+          colors={colors.gradient}
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 0.5 }}
           style={productStyles.heading}
@@ -45,21 +68,22 @@ const Product: React.FC<Props> = ({ route, navigation }) => {
             colors={imageBgGradient}
             style={productStyles.imageOverlay}
           />
+
           <TouchableOpacity
             style={productStyles.likeButton}
-            onPress={() => setLiked(prev => !prev)}
+            onPress={toggleFavorite}
           >
             <Icon
-              name={liked ? 'heart' : 'heart-outline'}
+              name={isFavorite ? 'heart' : 'heart-outline'}
               size={24}
-              color={liked ? theme.nonvegColor : theme.shadowColor}
+              color={isFavorite ? theme.nonvegColor : theme.shadowColor}
             />
           </TouchableOpacity>
 
           <View style={productStyles.metaRow}>
             <View style={productStyles.vegTag}>
               <Text style={productStyles.vegText}>
-                {food_type === 'veg' ? theme.greenDot : theme.redDot}
+                {food_type === 'Veg' ? theme.greenDot : theme.redDot}
               </Text>
             </View>
             <View style={productStyles.rating}>
