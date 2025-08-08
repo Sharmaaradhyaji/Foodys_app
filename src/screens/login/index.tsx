@@ -1,12 +1,10 @@
-import { Alert, Pressable, ScrollView, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, Text, View, TextInput } from 'react-native';
 import React, { useState } from 'react';
-import { TextInput } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { stylesLogin } from './login.styles';
 import PrimaryBtn from '../../components/button';
 import { alertText, signinText } from '../../globals/constants/constants';
 import { Stacktype } from '../../types';
-import { specialChars } from '../../globals/globals';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/authSlice';
 
@@ -17,26 +15,29 @@ const Login: React.FC<Props> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidPassword = (password: string) => {
+    const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleLogin = () => {
     if (!email || !password) {
-      const text = alertText.unfilledDetails;
-      Alert.alert(text);
+      Alert.alert(alertText.unfilledDetails);
       return;
     }
 
-    if (!email.includes('@') || email.lastIndexOf('.') < email.indexOf('@')) {
+    if (!isValidEmail(email)) {
       Alert.alert(signinText.validation.alertEmail);
       return;
     }
 
-    const hasSpecialChar = specialChars.some(char => password.includes(char));
-    if (!hasSpecialChar) {
+    if (!isValidPassword(password)) {
       Alert.alert(signinText.validation.alertPassword);
-      return;
-    }
-
-    if (password.length < 6) {
-      Alert.alert(signinText.validation.alertPasswordLength);
       return;
     }
 
@@ -63,6 +64,8 @@ const Login: React.FC<Props> = ({ navigation }) => {
           value={email}
           onChangeText={setEmail}
           style={stylesLogin.inputBox}
+          autoCapitalize="none"
+          keyboardType="email-address"
         />
 
         <TextInput

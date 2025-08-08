@@ -19,7 +19,7 @@ export const createToggleStyles = (colors: {
       borderRadius: 20,
       width: wp(49),
       elevation: 5,
-      shadowColor: colors.shadowColor, // ✅ fixed
+      shadowColor: colors.shadowColor,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
@@ -43,11 +43,11 @@ export const createToggleStyles = (colors: {
       height: 12,
       borderRadius: 20,
       marginRight: 6,
-      backgroundColor: colors.text,
+      backgroundColor: '#dc3545',
     },
     label: {
       fontSize: 16,
       fontWeight: '600',
-      color: colors.text, // ✅ added
+      color: colors.text,
     },
   });

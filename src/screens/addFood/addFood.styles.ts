@@ -1,86 +1,99 @@
 import { StyleSheet } from 'react-native';
-import { theme } from '../../globals/constants/constants';
 import { hp, wp } from '../../globals/globals';
 
-export const stylesAddFood = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 22,
-    backgroundColor: 'white',
-  },
-  heading: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 22,
-    alignSelf: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 14,
-    borderRadius: 18,
-    marginBottom: 12,
-  },
-  button: {
-    backgroundColor: theme.themePrimaryOrange,
-    padding: 12,
-    borderRadius: 18,
-    alignItems: 'center',
-    width: wp('51%'),
-    alignSelf: 'center',
-    margin: 18,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  backButton: {
-    backgroundColor: theme.themePrimaryOrange,
-    padding: 4,
-    borderRadius: 40,
-    alignItems: 'center',
-    margin: 10,
-    width: wp('11%'),
-    height: hp('5%'),
-    alignSelf: 'center',
-    justifyContent: 'center',
-    marginBottom: hp(4)
-  },
-  label: {
-  fontSize: 16,
-  fontWeight: '600',
-  marginTop: 10,
-  marginBottom: 5,
-},
-radioGroup: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginBottom: 15,
-},
-radioOption: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginRight: 20,
-},
-radioCircle: {
-  height: 20,
-  width: 20,
-  borderRadius: 10,
-  borderWidth: 2,
-  borderColor: theme.themePrimaryOrange,
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginRight: 8,
-},
-radioSelected: {
-  height: 10,
-  width: 10,
-  borderRadius: 5,
-  backgroundColor: theme.themePrimaryOrange,
-},
-radioLabel: {
-  fontSize: 15,
-  color: theme.color333,
-},
-});
+export const createAddFoodStyles = (colors: {
+  background: string;
+  text: string;
+  themePrimaryOrange: string;
+  color333: string;
+}) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: wp(5),
+      backgroundColor: colors.background,
+    },
+    heading: {
+      fontSize: hp(3),
+      fontWeight: 'bold',
+      marginBottom: hp(2.5),
+      alignSelf: 'center',
+      color: colors.text,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: colors.text,
+      padding: hp(1.8),
+      borderRadius: wp(5),
+      marginBottom: hp(1.5),
+      color: colors.text,
+      fontSize: hp(2),
+    },
+    button: {
+      backgroundColor: colors.themePrimaryOrange,
+      paddingVertical: hp(1.5),
+      paddingHorizontal: wp(4),
+      borderRadius: wp(5),
+      alignItems: 'center',
+      width: wp(51),
+      alignSelf: 'center',
+      margin: hp(2.2),
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: hp(2),
+      fontWeight: 'bold',
+    },
+    backButton: {
+      backgroundColor: colors.themePrimaryOrange,
+      padding: hp(0.5),
+      borderRadius: wp(10),
+      alignItems: 'center',
+      margin: hp(1),
+      width: wp(11),
+      height: hp(5),
+      alignSelf: 'center',
+      justifyContent: 'center',
+      marginBottom: hp(4),
+    },
+    label: {
+      fontSize: hp(2.5),
+      fontWeight: '600',
+      marginTop: hp(1.5),
+      marginBottom: hp(0.6),
+      color: colors.text,
+      alignSelf: 'center',
+    },
+    radioGroup: {
+      flexDirection: 'row',
+      marginTop: hp(1.5),
+      alignItems: 'center',
+      alignSelf: 'center',
+      marginBottom: hp(2),
+    },
+    radioOption: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginRight: wp(5),
+    },
+    radioCircle: {
+      height: wp(3.5),
+      width: wp(3.5),
+      borderRadius: wp(3),
+      borderWidth: 2,
+      borderColor: colors.themePrimaryOrange,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: wp(2),
+    },
+    radioSelected: {
+      height: wp(2),
+      width: wp(2),
+      borderRadius: wp(1.75),
+      backgroundColor: colors.themePrimaryOrange,
+    },
+    radioLabel: {
+      fontSize: hp(2.2),
+      color: colors.text,
+    },
+  });

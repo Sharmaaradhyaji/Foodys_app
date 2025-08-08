@@ -1,20 +1,20 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import { height, hp, lightTheme, width, wp } from '../../globals/globals';
+import { StyleSheet } from 'react-native';
+import { hp, wp, lightTheme } from '../../globals/globals';
 import { theme } from '../../globals/constants/constants';
 
 export const stylesLogin = StyleSheet.create({
   heading: {
-    marginBottom: height * 0.01,
+    marginBottom: hp(1),
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: width * 0.07,
+    fontSize: wp(7),
   },
   Box: {
-    margin: hp('4%'),
-    marginTop: height * 0.07,
-    borderRadius: 50,
-    gap: height * 0.02,
-    padding: hp('4%'),
+    margin: hp(4),
+    marginTop: hp(7),
+    borderRadius: wp(10),
+    gap: hp(2),
+    padding: hp(4),
     backgroundColor: lightTheme.secondaryBackground,
     elevation: 4,
     shadowColor: theme.color000,
@@ -22,37 +22,37 @@ export const stylesLogin = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
   },
   inputBox: {
-    width: wp('70%'),
-    height: height * 0.07,
+    width: wp(70),
+    height: hp(7),
     backgroundColor: theme.inputBoxColor,
-    borderRadius: 30,
-    paddingHorizontal: width * 0.06,
+    borderRadius: wp(30),
+    paddingHorizontal: wp(6),
     justifyContent: 'center',
     alignSelf: 'center',
-    fontSize: height * 0.02,
+    fontSize: hp(2),
   },
   para: {
-    fontWeight: 'medium',
-    fontSize: width * 0.05,
+    fontWeight: '500',
+    fontSize: wp(5),
     textAlign: 'center',
-    marginBottom: hp("2%")
+    marginBottom: hp(2),
   },
   textLogin: {
     fontWeight: 'bold',
-    fontSize: width * 0.04,
-    marginTop: height * 0.02,
+    fontSize: wp(4),
+    marginTop: hp(2),
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-    width: wp('70%'),
+    width: wp(70),
     color: theme.themeSecondaryBlack,
   },
   link: {
     textAlign: 'center',
-    fontSize: width * 0.04,
+    fontSize: wp(4),
     color: theme.themePrimaryOrange,
     textDecorationLine: 'underline',
-  marginBottom: hp(0.9)
+    marginBottom: hp(0.9),
   },
 });

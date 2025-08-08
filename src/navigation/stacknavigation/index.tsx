@@ -4,7 +4,7 @@ import Login from '../../screens/login';
 import Profile from '../../screens/profile';
 import { Stacktype } from '../../types';
 import Product from '../../screens/product';
-import TabNavigator from '../tabnavigation';
+import TabNavigator from '../tabNavigation';
 import AddFood from '../../screens/addFood';
 
 const Stack = createNativeStackNavigator<Stacktype>();

@@ -1,43 +1,44 @@
 import { StyleSheet } from 'react-native';
 import { theme } from '../../globals/constants/constants';
-import { height } from '../../globals/globals';
+import { hp, wp } from '../../globals/globals';
 
 export const stylesProfile = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: wp(6),
   },
   heading: {
-    fontSize: 30,
+    fontSize: hp(3.8),
     fontWeight: 'bold',
-    marginVertical: 20,
+    marginVertical: hp(2.4),
     alignSelf: 'center',
     color: theme.themePrimaryOrange,
   },
   image: {
     alignSelf: 'center',
-    marginBottom: 10,
+    marginBottom: hp(1.2),
   },
   card: {
     backgroundColor: theme.boxColorOverPage,
-    borderRadius: 20,
-    padding: 20,
+    borderRadius: wp(5),
+    padding: wp(5),
     elevation: 9,
     shadowColor: theme.shadowColor,
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginTop: 20,
+    marginTop: hp(2.4),
   },
   logoutButton: {
     backgroundColor: theme.nonvegColor,
-    padding: 14,
-    marginTop: 30,
-    borderRadius: 10,
+    paddingVertical: hp(1.8),
+    marginTop: hp(3.5),
+    marginBottom: hp(5.5),
+    borderRadius: wp(2.5),
     alignItems: 'center',
   },
   logoutText: {
     color: theme.whiteText,
-    fontSize: 16,
+    fontSize: hp(2),
     fontWeight: '600',
   },
 });

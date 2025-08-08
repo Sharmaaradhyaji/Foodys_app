@@ -13,15 +13,12 @@ export const createHomeStyles = (colors: {
       backgroundColor: colors.background,
     },
     hero: {
-      borderTopLeftRadius: wp(9),
-      borderTopRightRadius: 0,
-      borderBottomRightRadius: wp(9),
-      borderBottomLeftRadius: 0,
+      borderRadius: 46,
       padding: hp(1),
       marginHorizontal: hp(1),
       elevation: 11,
       alignSelf: 'center',
-      width: '94%',
+      width: '97%',
     },
     headText: {
       fontWeight: '500',

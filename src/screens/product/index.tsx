@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Stacktype } from '../../types';
 import { createProductStyles } from './product.styles';
 import Heading from '../../components/heading';
-import Ingredients from '../../components/ingredients';
+import Ingredients from '../../components/ingredient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -30,7 +30,7 @@ const Product: React.FC<Props> = ({ route }) => {
     (state: RootState) => state.favoriteFood.favorites,
   );
 
-  const isFavorite = favorites.some(f => f.id === id);
+  const isFavorite = favorites.some(favorite => favorite.id === id);
 
   const toggleFavorite = () => {
     if (isFavorite) {

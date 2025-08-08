@@ -9,16 +9,13 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RadioButton } from 'react-native-paper';
 import { stylesSignUp } from './signup.styles';
 import PrimaryBtn from '../../components/button';
 import {
   alertText,
   signupText,
-  theme,
 } from '../../globals/constants/constants';
 import { Stacktype } from '../../types';
-import { specialChars } from '../../globals/globals';
 import { useDispatch } from 'react-redux';
 import { signup } from '../../store/authSlice';
 
@@ -34,36 +31,41 @@ const Signup: React.FC<Props> = ({ navigation }) => {
   const [place, setPlace] = useState('');
   const [password, setPassword] = useState('');
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const numberRegex = /^\d{10}$/;
+  const namePlaceRegex = /^[a-zA-Z\s]{3,}$/;
+  const passwordRegex = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+
   const checkDetails = () => {
-    if (name.length < 3) {
+    if (!namePlaceRegex.test(name)) {
       Alert.alert(signupText.validation.nameLength);
       return false;
     }
-    if (!email.includes('@') || email.lastIndexOf('.') < email.indexOf('@')) {
+
+    if (!emailRegex.test(email)) {
       Alert.alert(signupText.validation.validEmail);
       return false;
     }
-    if (number.length !== 10 || isNaN(Number(number))) {
+
+    if (!numberRegex.test(number)) {
       Alert.alert(signupText.validation.validNumber);
       return false;
     }
+
     return true;
   };
 
   const checkPassword = () => {
-    const hasSpecialChar = specialChars.some(char => password.includes(char));
-    if (!hasSpecialChar) {
+    if (!passwordRegex.test(password)) {
       Alert.alert(signupText.validation.specialCharPassword);
       return false;
     }
-    if (password.length < 6) {
-      Alert.alert(signupText.validation.passwordLength);
-      return false;
-    }
-    if (place.length < 3) {
+
+    if (!namePlaceRegex.test(place)) {
       Alert.alert(signupText.validation.placeLength);
       return false;
     }
+
     return true;
   };
 

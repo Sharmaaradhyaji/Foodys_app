@@ -4,7 +4,7 @@ import Card from '../../components/card';
 import { useNavigation } from '@react-navigation/native';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
-import { createFavFoodStyles } from './favfood.styles';
+import { createFavFoodStyles } from './favFood.styles';
 
 export default function FavoriteFoodScreen() {
   const navigation = useNavigation<any>();

@@ -1,19 +1,14 @@
-import {
-  View,
-  FlatList,
-  Text,
-  Pressable,
-} from 'react-native';
+import { View, FlatList, Text, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import Navbar from '../../components/navbar';
 import Card from '../../components/card';
 import { Toggle } from '../../components/circleToggle';
 import { createHomeStyles } from './home.styles';
 import SearchBar from '../../components/searchbar';
-import { homeText } from '../../globals/constants/constants';
+import { homeText, stringConstants } from '../../globals/constants/constants';
 import { HomeScreenProps } from '../../types';
 import LinearGradient from 'react-native-linear-gradient';
-import { hp, wp } from '../../globals/globals';
+import { brand, hp, wp } from '../../globals/globals';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -25,7 +20,7 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
     ...theme,
     themePrimaryOrange: theme.primary,
   };
-  const gradientColors = theme.gradient
+  const gradientColors = theme.gradient;
 
   const stylesHome = createHomeStyles(colors);
   const [vegOnly, setVegOnly] = useState<'Veg' | 'Non-Veg'>('Veg');
@@ -33,9 +28,9 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
   const foods = useSelector((state: RootState) => state.food.foods);
 
   const filteredData =
-    vegOnly === 'Veg'
-      ? foods.filter(item => item.food_type === 'Veg')
-      : foods.filter(item => item.food_type === 'Non-Veg');
+    vegOnly === stringConstants.veg
+      ? foods.filter(item => item.food_type === stringConstants.veg)
+      : foods.filter(item => item.food_type === stringConstants.nonVeg);
 
   return (
     <View style={[stylesHome.container]}>
@@ -85,7 +80,7 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
                   <Icon
                     name="fast-food-outline"
                     size={140}
-                    color="white"
+                    color={brand.white}
                     style={stylesHome.heroIcon}
                   />
                 </Animatable.View>
@@ -118,7 +113,7 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
         onPress={() => navigation.navigate('AddFood')}
         style={stylesHome.addFavFood}
       >
-        <Icon name="add" size={30} color="white" />
+        <Icon name="add" size={30} color={brand.white} />
       </Pressable>
     </View>
   );

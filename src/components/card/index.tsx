@@ -10,13 +10,22 @@ import { createCardStyles } from './card.styles';
 
 const Card = memo((props: cardProps) => {
   const theme = useSelector((state: RootState) => state.theme.colors);
-    const colors = {
-      ...theme,
-      themePrimaryOrange: theme.primary,
-    };
-  
-    const stylesCard = createCardStyles(colors);
-  const { id, title, image, rating, ingredients, steps_to_prepare, food_type, navigate } = props;
+  const colors = {
+    ...theme,
+    themePrimaryOrange: theme.primary,
+  };
+
+  const stylesCard = createCardStyles(colors);
+  const {
+    id,
+    title,
+    image,
+    rating,
+    ingredients,
+    steps_to_prepare,
+    food_type,
+    navigate,
+  } = props;
 
   const onPressHandler = useCallback(() => {
     navigate('Product', {
@@ -28,7 +37,16 @@ const Card = memo((props: cardProps) => {
       steps_to_prepare,
       food_type,
     });
-  }, [id, title, image, rating, ingredients, steps_to_prepare, food_type, navigate]);
+  }, [
+    id,
+    title,
+    image,
+    rating,
+    ingredients,
+    steps_to_prepare,
+    food_type,
+    navigate,
+  ]);
 
   return (
     <TouchableOpacity
@@ -44,11 +62,7 @@ const Card = memo((props: cardProps) => {
 
       <View style={stylesCard.data}>
         <View style={stylesCard.upperData}>
-          <Text
-            style={stylesCard.title}
-            numberOfLines={2}
-            ellipsizeMode="tail"
-          >
+          <Text style={stylesCard.title} numberOfLines={2} ellipsizeMode="tail">
             {title}
           </Text>
 

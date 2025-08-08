@@ -46,7 +46,8 @@ export const signupText = {
 
 export const profile = {
   alertLogoutSelect: 'Logged out', 
-  alertLogoutConfirm: 'You have been logged out successfully.'
+  alertLogoutConfirm: 'You have been logged out successfully.',
+  notAvailable: 'N/A'
 }
 
 export const alertText = {
@@ -66,7 +67,7 @@ export const navbarText = {
   Heading: "Welcome to Foody's!",
 };
 
-export const theme = {
+export const theme= {
   boxColorOverPage: '#F8F8F8',
   inputBoxColor: '#C0C0C0',
   themePrimaryOrange: '#FF7722',
@@ -76,7 +77,7 @@ export const theme = {
   starRating: '#fbbf24',
   cardColor: 'white',
   vegColor: 'green',
-  nonvegColor: 'red',
+  nonvegColor: '#dc3545',
   activeVeg: '#e6ffe6',
   activeNonVeg: '#ffe6e6',
   whiteText: '#fff',
@@ -105,3 +106,9 @@ export const gradientColors = ['#fff1cc', '#fa9420', '#dd6a00']
 export const HeadingColorGradient = ['#fdbb2d', '#fa9420', '#e96443']
 
 export const imageBgGradient= ['rgba(0,0,0,0.4)', 'transparent']
+
+export const vegColor = 'green'
+export const  nonvegColor = '#dc3545'
+
+export const cancel = 'cancel'
+export const ok = 'ok'

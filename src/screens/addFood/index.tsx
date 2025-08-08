@@ -8,17 +8,27 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import { Stacktype } from '../../types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { stylesAddFood } from './addFood.styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Stacktype } from '../../types';
 import { addFood } from '../../store/foodSlice';
+import { createAddFoodStyles } from './addFood.styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { RootState } from '../../store/store';
 
 type Props = NativeStackScreenProps<Stacktype, 'AddFood'>;
 
 const AddFood: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch();
+  const theme = useSelector((state: RootState) => state.theme.colors);
+
+  const colors = {
+    ...theme,
+    themePrimaryOrange: theme.primary,
+    color333: '#333',
+  };
+
+  const stylesAddFood = createAddFoodStyles(colors);
 
   const [title, setTitle] = useState('');
   const [image, setImage] = useState('');
@@ -61,12 +71,14 @@ const AddFood: React.FC<Props> = ({ navigation }) => {
         style={stylesAddFood.input}
         value={title}
         onChangeText={setTitle}
+        placeholderTextColor="#999"
       />
       <TextInput
         placeholder="Image URL"
         style={stylesAddFood.input}
         value={image}
         onChangeText={setImage}
+        placeholderTextColor="#999"
       />
       <TextInput
         placeholder="Rating"
@@ -74,18 +86,21 @@ const AddFood: React.FC<Props> = ({ navigation }) => {
         value={rating}
         onChangeText={setRating}
         keyboardType="numeric"
+        placeholderTextColor="#999"
       />
       <TextInput
         placeholder="Ingredients (comma separated)"
         style={stylesAddFood.input}
         value={ingredients}
         onChangeText={setIngredients}
+        placeholderTextColor="#999"
       />
       <TextInput
         placeholder="Steps (comma separated)"
         style={stylesAddFood.input}
         value={steps}
         onChangeText={setSteps}
+        placeholderTextColor="#999"
       />
 
       <Text style={stylesAddFood.label}>Food Type</Text>
@@ -94,7 +109,7 @@ const AddFood: React.FC<Props> = ({ navigation }) => {
           style={stylesAddFood.radioOption}
           onPress={() => setFoodType('Veg')}
           activeOpacity={0.9}
-          >
+        >
           <View style={stylesAddFood.radioCircle}>
             {foodType === 'Veg' && <View style={stylesAddFood.radioSelected} />}
           </View>

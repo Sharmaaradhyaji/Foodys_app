@@ -30,6 +30,7 @@ export const createSearchbarStyles = (colors: {
     },
     icon: {
       marginRight: wp('2%'),
+      color: colors.text
     },
     inputBox: {
       flex: 1,

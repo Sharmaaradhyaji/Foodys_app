@@ -10,7 +10,7 @@ export const createFavFoodStyles = (colors: {
     rootContainer: {
       flex: 1,
       backgroundColor: colors.background,
-      marginBottom: hp(3)
+      marginBottom: hp(2.1),
     },
     container: {
       flex: 1,

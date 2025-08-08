@@ -20,14 +20,10 @@ const SearchBar = (props: searchBar) => {
         <Animatable.View
           animation="flash"
           iterationCount="infinite"
-          duration={7000}
+          duration={6000}
           easing="linear"
         >
-          <Icon
-            name="search"
-            size={20}
-            style={stylesSearchbar.icon}
-          />
+          <Icon name="search" size={20} style={stylesSearchbar.icon} />
         </Animatable.View>
         <TextInput
           placeholder={props.placeholder}

@@ -84,7 +84,7 @@ export const stylesSignUp = StyleSheet.create({
   },
   radioCircle: {
     height: hp(2.5),
-    width: hp(2.5), 
+    width: hp(2.5),
     borderRadius: hp(1.25),
     borderWidth: 2,
     borderColor: theme.themePrimaryOrange,

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootState } from './store/store';
-import { StackNavigator } from './navigation/stacknavigation';
+import { StackNavigator } from './navigation/stackNavigation';
 import { createGlobalStyles } from './globals/globals';
 
 const Main = () => {

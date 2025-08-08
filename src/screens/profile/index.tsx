@@ -1,15 +1,10 @@
 // src/screens/profile/profile.tsx
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Alert,
-  ScrollView,
-} from 'react-native';
+import { View, Text, Pressable, Alert, ScrollView } from 'react-native';
 import React from 'react';
 import {
+  cancel,
+  ok,
   profile,
   profileText,
   signupText,
@@ -32,16 +27,16 @@ type Props = CompositeScreenProps<
 
 const Profile: React.FC<Props> = ({ navigation }) => {
   const { name, email, number, gender, place } = useSelector(
-    (state: RootState) => state.auth
+    (state: RootState) => state.auth,
   );
 
   const handleLogout = () => {
     Alert.alert(profile.alertLogoutSelect, profile.alertLogoutConfirm, [
       {
-        text: 'cancel',
+        text: cancel,
       },
       {
-        text: 'ok',
+        text: ok,
         onPress: () => navigation.replace('Signup'),
       },
     ]);
