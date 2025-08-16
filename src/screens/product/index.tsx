@@ -1,53 +1,58 @@
 import React from 'react';
 import { Text, Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Stacktype } from '../../types';
+import { StackType } from '../../types';
 import { createProductStyles } from './product.styles';
 import Heading from '../../components/heading';
 import Ingredients from '../../components/ingredient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import { imageBgGradient, theme } from '../../globals/constants/constants';
+import { RootState } from '../../store';
 import {
-  HeadingColorGradient,
-  imageBgGradient,
-  theme,
-} from '../../globals/constants/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { addFavorite, removeFavorite } from '../../store/favoriteFood';
+  addFavoriteFood,
+  removeFavoriteFood,
+  toggleFavoriteLocal,
+} from '../../store/slices/favoriteFoodSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-type Props = NativeStackScreenProps<Stacktype, 'Product'>;
+type Props = NativeStackScreenProps<StackType, 'Product'>;
 
 const Product: React.FC<Props> = ({ route }) => {
-  const { colors } = useSelector((state: RootState) => state.theme);
+  const { colors } = useAppSelector((state: RootState) => state.theme);
   const productStyles = createProductStyles(colors);
 
-  const { id, title, image, ingredients, steps_to_prepare, rating, food_type } =
-    route.params;
+  const {
+    _id,
+    foodName,
+    stepsToPrepare,
+    ingredients,
+    rating,
+    foodType,
+  } = route.params;
 
-  const dispatch = useDispatch();
-  const favorites = useSelector(
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector(
     (state: RootState) => state.favoriteFood.favorites,
   );
 
-  const isFavorite = favorites.some(favorite => favorite.id === id);
+  const isFavorite = favorites.some(favorite => favorite._id === _id);
 
   const toggleFavorite = () => {
-    if (isFavorite) {
-      dispatch(removeFavorite(id));
-    } else {
-      dispatch(
-        addFavorite({
-          id,
-          food_name: title,
-          image_url: image,
-          rating,
-          ingredients,
-          steps_to_prepare,
-          food_type,
-        }),
-      );
-    }
+    const foodObj = {
+      _id: _id,
+      foodName: foodName,
+      stepsToPrepare: stepsToPrepare ?? [],
+      rating,
+      ingredients,
+      imageUrl: route.params.imageUrl,
+      foodType,
+    };
+
+    dispatch(toggleFavoriteLocal(foodObj));
+    dispatch(isFavorite ? removeFavoriteFood(_id!) : addFavoriteFood(_id!))
+      .unwrap()
+      .catch(() => dispatch(toggleFavoriteLocal(foodObj)));
   };
 
   return (
@@ -59,11 +64,11 @@ const Product: React.FC<Props> = ({ route }) => {
           end={{ x: 0, y: 0.5 }}
           style={productStyles.heading}
         >
-          <Heading text={title} styles={productStyles.headText} />
+          <Heading text={foodName} styles={productStyles.headText} />
         </LinearGradient>
 
         <View style={productStyles.imageWrapper}>
-          <Image source={{ uri: image }} style={productStyles.image} />
+          <Image source={{ uri: route.params.imageUrl }} style={productStyles.image} />
           <LinearGradient
             colors={imageBgGradient}
             style={productStyles.imageOverlay}
@@ -83,7 +88,7 @@ const Product: React.FC<Props> = ({ route }) => {
           <View style={productStyles.metaRow}>
             <View style={productStyles.vegTag}>
               <Text style={productStyles.vegText}>
-                {food_type === 'Veg' ? theme.greenDot : theme.redDot}
+                {foodType === 'Veg' ? theme.greenDot : theme.redDot}
               </Text>
             </View>
             <View style={productStyles.rating}>
@@ -99,7 +104,7 @@ const Product: React.FC<Props> = ({ route }) => {
             <View style={productStyles.ingredients}>
               {ingredients.map((item, index) => (
                 <Ingredients
-                  key={index}
+                  key={`${index}+${item}`}
                   style={productStyles.text}
                   text={item}
                 />
@@ -108,8 +113,8 @@ const Product: React.FC<Props> = ({ route }) => {
           </View>
           <View style={productStyles.steps}>
             <Text style={productStyles.subheading}>Preparation Steps</Text>
-            {steps_to_prepare.map((step, index) => (
-              <Text key={index} style={productStyles.text}>
+            {stepsToPrepare.map((step, index) => (
+              <Text key={`${index}-${step}`} style={productStyles.text}>
                 {index + 1}. {step}
               </Text>
             ))}

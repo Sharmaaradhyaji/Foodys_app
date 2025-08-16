@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
-import { hp, wp } from '../../globals/globals';
+import { brand, hp, wp } from '../../globals/globals';
 
 export const createAddFoodStyles = (colors: {
   background: string;
   text: string;
   themePrimaryOrange: string;
   color333: string;
+  secondaryBackground: string;
 }) =>
   StyleSheet.create({
     container: {
@@ -23,11 +24,12 @@ export const createAddFoodStyles = (colors: {
     input: {
       borderWidth: 1,
       borderColor: colors.text,
-      padding: hp(1.8),
+      padding: hp(2),
       borderRadius: wp(5),
       marginBottom: hp(1.5),
       color: colors.text,
       fontSize: hp(2),
+      backgroundColor: colors.secondaryBackground,
     },
     button: {
       backgroundColor: colors.themePrimaryOrange,
@@ -54,7 +56,7 @@ export const createAddFoodStyles = (colors: {
       height: hp(5),
       alignSelf: 'center',
       justifyContent: 'center',
-      marginBottom: hp(4),
+      marginBottom: hp(7),
     },
     label: {
       fontSize: hp(2.5),
@@ -95,5 +97,25 @@ export const createAddFoodStyles = (colors: {
     radioLabel: {
       fontSize: hp(2.2),
       color: colors.text,
+    },
+    imageStyle: {
+      width: wp(60),
+      height: hp(25),
+      borderRadius: wp(4),
+      marginBottom: hp(1),
+    },
+    emptyImageStyle: {
+      width: wp(60),
+      height: hp(25),
+      borderRadius: wp(4),
+      backgroundColor: colors.secondaryBackground,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: brand.primary,
+    },
+    imageText: {
+      color: brand.primary,
+      marginTop: 10,
     },
   });

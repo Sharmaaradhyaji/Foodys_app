@@ -1,16 +1,17 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {
+  allColor,
   nonvegColor,
   stringConstants,
   vegColor,
 } from '../../globals/constants/constants';
-import { toggleProps } from '../../types';
-import { RootState } from '../../store/store';
+import { ToggleProps } from '../../types';
+import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import { createToggleStyles } from './toggle.styles';
 
-export const Toggle = (props: toggleProps) => {
+export const Toggle = (props: ToggleProps) => {
   const theme = useSelector((state: RootState) => state.theme.colors);
 
   const colors = {
@@ -32,6 +33,18 @@ export const Toggle = (props: toggleProps) => {
       >
         <View style={[stylesToggle.circle, { backgroundColor: vegColor }]} />
         <Text style={stylesToggle.label}>{stringConstants.veg}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        activeOpacity={0.9}
+        style={[
+          stylesToggle.option,
+          props.selected === "HYBRID" && stylesToggle.activeHybrid,
+        ]}
+        onPress={() => props.onSelect('HYBRID')}
+      >
+        <View style={[stylesToggle.circle, { backgroundColor: allColor }]} />
+        <Text style={stylesToggle.label}>All</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

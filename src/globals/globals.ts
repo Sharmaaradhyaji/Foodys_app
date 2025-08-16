@@ -35,6 +35,7 @@ export const brand = {
   veg: '#e6ffe6',
   nonveg: '#ffe6e6',
   white: 'white',
+  yellow: 'yellow'
 };
 
 export const lightTheme = {
@@ -52,6 +53,7 @@ export const lightTheme = {
   ratingColor: brand.star,
   activeVeg: brand.veg,
   activeNonVeg: brand.nonveg,
+  Hybrid: '#F9D276',
   gradient: ['#fff1cc', '#fa9420', '#dd6a00'],
 };
 
@@ -70,6 +72,7 @@ export const darkTheme = {
   ratingColor: brand.star,
   activeVeg: '#144d14',
   activeNonVeg: '#4d1414',
+  Hybrid: '#F39422',
   gradient: ['#4e2600', '#ff8a16'],
 };
 

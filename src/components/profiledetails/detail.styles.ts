@@ -5,7 +5,7 @@ import { theme } from '../../globals/constants/constants';
 export const detailsStyle = StyleSheet.create({
   data: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: hp(2),
   },
@@ -19,7 +19,6 @@ export const detailsStyle = StyleSheet.create({
   value: {
     fontSize: 18,
     color: theme.color555,
-    flex: 1,
     textAlign: 'right',
   },
 });

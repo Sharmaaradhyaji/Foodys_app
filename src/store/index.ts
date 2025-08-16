@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './authSlice'
-import themeReducer from './themeSlice'
-import foodReducer from './foodSlice'
-import favoriteFoodReducer from './favoriteFood'
+import authReducer from './slices/authSlice'
+import themeReducer from './slices/themeSlice'
+import foodReducer from './slices/foodSlice'
+import favoriteFoodReducer from './slices/favoriteFoodSlice'
 
 export const store = configureStore({
   reducer: {

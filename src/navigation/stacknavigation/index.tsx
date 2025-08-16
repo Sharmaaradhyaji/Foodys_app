@@ -2,12 +2,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Signup from '../../screens/signup';
 import Login from '../../screens/login';
 import Profile from '../../screens/profile';
-import { Stacktype } from '../../types';
+import { StackType } from '../../types';
 import Product from '../../screens/product';
 import TabNavigator from '../tabNavigation';
 import AddFood from '../../screens/addFood';
 
-const Stack = createNativeStackNavigator<Stacktype>();
+const Stack = createNativeStackNavigator<StackType>();
 
 export const StackNavigator = () => (
   <Stack.Navigator initialRouteName="Login">

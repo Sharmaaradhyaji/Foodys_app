@@ -1,27 +1,34 @@
-import { Alert, Pressable, ScrollView, Text, View, TextInput } from 'react-native';
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  TextInput,
+} from 'react-native';
 import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { stylesLogin } from './login.styles';
 import PrimaryBtn from '../../components/button';
-import { alertText, signinText } from '../../globals/constants/constants';
-import { Stacktype } from '../../types';
-import { useDispatch } from 'react-redux';
-import { login } from '../../store/authSlice';
+import { alertText, emailRegex, passwordRegex, signinText } from '../../globals/constants/constants';
+import { StackType } from '../../types';
+import { fetchUser, loginUser, setToken } from '../../store/slices/authSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { RootState } from '../../store';
 
-type Props = NativeStackScreenProps<Stacktype, 'Login'>;
+type Props = NativeStackScreenProps<StackType, 'Login'>;
 
 const Login: React.FC<Props> = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { loading } = useAppSelector((state: RootState) => state.auth);
 
   const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const isValidPassword = (password: string) => {
-    const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
     return passwordRegex.test(password);
   };
 
@@ -41,12 +48,24 @@ const Login: React.FC<Props> = ({ navigation }) => {
       return;
     }
 
-    dispatch(login({ email, password }));
-
-    navigation.replace('Start', {
-      screen: 'Home',
-      params: { email, password },
-    });
+    dispatch(loginUser({ email, password }))
+      .unwrap()
+      .then(res => {
+        const token = res.accessToken;
+        if (token) {
+          dispatch(setToken(token));
+          return dispatch(fetchUser()).unwrap();
+        }
+      })
+      .then(() => {
+        navigation.replace('Start', {
+          screen: 'Home',
+          params: { email, password },
+        });
+      })
+      .catch((error: any) => {
+        Alert.alert(error || signinText.loginFailed);
+      });
   };
 
   const handleSignUp = () => {
@@ -76,7 +95,10 @@ const Login: React.FC<Props> = ({ navigation }) => {
           style={stylesLogin.inputBox}
         />
 
-        <PrimaryBtn title={signinText.submitButton} onPress={handleLogin} />
+        <PrimaryBtn
+         title={loading ? signinText.loading : signinText.submitButton}
+         onPress={handleLogin} 
+         disabled={loading}/>
       </View>
 
       <Text style={stylesLogin.textLogin}>{signinText.textLog}</Text>

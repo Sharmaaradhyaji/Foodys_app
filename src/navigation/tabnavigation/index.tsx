@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../../screens/home';
 import Profile from '../../screens/profile';
@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { TabParamList } from '../../types';
 import { fabStyles } from './bottomtab.styles';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState } from '../../store';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -33,7 +33,7 @@ const TabNavigator = () => {
           tabBarStyle: styles.tab,
           tabBarActiveTintColor: theme.primary,
           tabBarInactiveTintColor: theme.text,
-          tabBarLabelStyle: { fontSize: 12 },
+          tabBarLabelStyle: { fontSize: 10 },
         }}
       >
         <Tab.Screen

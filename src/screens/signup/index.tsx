@@ -13,16 +13,21 @@ import { stylesSignUp } from './signup.styles';
 import PrimaryBtn from '../../components/button';
 import {
   alertText,
+  emailRegex,
+  namePlaceRegex,
+  numberRegex,
+  passwordRegex,
   signupText,
 } from '../../globals/constants/constants';
-import { Stacktype } from '../../types';
-import { useDispatch } from 'react-redux';
-import { signup } from '../../store/authSlice';
-
-type Props = NativeStackScreenProps<Stacktype, 'Signup'>;
+import { StackType } from '../../types';
+import { signupUser } from '../../store/slices/authSlice';
+import { RootState } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+type Props = NativeStackScreenProps<StackType, 'Signup'>;
 
 const Signup: React.FC<Props> = ({ navigation }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state: RootState) => state.auth);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,11 +35,6 @@ const Signup: React.FC<Props> = ({ navigation }) => {
   const [gender, setGender] = useState(signupText.radio.male);
   const [place, setPlace] = useState('');
   const [password, setPassword] = useState('');
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const numberRegex = /^\d{10}$/;
-  const namePlaceRegex = /^[a-zA-Z\s]{3,}$/;
-  const passwordRegex = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
 
   const checkDetails = () => {
     if (!namePlaceRegex.test(name)) {
@@ -79,11 +79,14 @@ const Signup: React.FC<Props> = ({ navigation }) => {
     const isPasswordValid = checkPassword();
 
     if (isDetailsValid && isPasswordValid) {
-      dispatch(signup({ name, email, number, gender, place, password }));
-      navigation.replace('Start', {
-        screen: 'Home',
-        params: { name, email, number, gender, place, password },
-      });
+      dispatch(signupUser({ name, email, number, gender, place, password }))
+        .unwrap()
+        .then(() => {
+          navigation.navigate('Login');
+        })
+        .catch(err => {
+          Alert.alert(signupText.signUpFailedAlert, err);
+        });
     }
   };
 
@@ -162,7 +165,11 @@ const Signup: React.FC<Props> = ({ navigation }) => {
           keyboardType="ascii-capable"
         />
 
-        <PrimaryBtn title={signupText.submitButton} onPress={handleSignUp} />
+        <PrimaryBtn
+          title={loading ? signupText.signingUp : signupText.submitButton}
+          onPress={handleSignUp}
+          disabled={loading}
+        />
       </View>
 
       <Text style={stylesSignUp.textLogin}>{signupText.textLog}</Text>

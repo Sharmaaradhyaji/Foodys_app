@@ -1,77 +1,14 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams, ParamListBase } from '@react-navigation/native';
-import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-
-export type Stacktype = {
-  Signup: undefined;
-  Start: NavigatorScreenParams<TabParamList>;
-  Login: undefined;
-  Profile: UserData;
-  Product: {
-    id: number;
-    title: string;
-    image: string;
-    rating: number;
-    ingredients: string[];
-    steps_to_prepare: string[];
-    food_type: 'Veg' | 'Non-Veg'
-  };
-  AddFood: undefined
-};
-
-export type TabParamList = {
-  Home: UserData;
-  Profile: Partial<UserData>;
-  FavoriteFood: undefined;
-};
-
-export interface cardProps {
-  id: number;
-  title: string;
-  image: string;
-  rating: number;
-  ingredients: string[];
-  steps_to_prepare: string[];
-  navigate: NativeStackNavigationProp<Stacktype, 'Product'>['navigate'];
-  food_type: 'Veg' | 'Non-Veg'
-}
-
-export type HomeScreenProps = CompositeScreenProps<
-  BottomTabScreenProps<TabParamList, 'Home'>,
-  NativeStackScreenProps<Stacktype>
->;
-
-export type navbarProps = {
-  navigation: HomeScreenProps['navigation'];
-  params: TabParamList['Home'];
-};
-
-export interface PrimaryBtnProps {
-  title?: string;
-  onPress: () => void;
-  style?: any;
-  textStyle?: any;
-}
-
-export interface cardProps {
-  title: string;
-  image: string;
-  rating: number;
-}
-
-export interface toggleProps {
-  selected: 'Veg' | 'Non-Veg';
-  onSelect: (value: 'Veg' | 'Non-Veg') => void;
-}
-
-export interface headingProps {
-  text: string;
-  styles: any
-}
-
-export interface searchBar {
-  placeholder: string;
-}
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { lightTheme } from '../globals/globals';
 
 export interface UserData {
   name?: string;
@@ -82,12 +19,106 @@ export interface UserData {
   password: string;
 }
 
-export interface FavFoodCard{
-  id: number;
-  title: string;
-  image: string;
+export type FoodType = 'Veg' | 'Non-Veg' | 'HYBRID';
+
+export type FoodDetails = Food
+
+export type StackType = {
+  Signup: undefined;
+  Start: NavigatorScreenParams<TabParamList>;
+  Login: undefined;
+  Profile: UserData;
+  Product: FoodDetails;
+  AddFood: { capturedImage?: string };
+  CameraScreen: undefined;
+};
+
+export type TabParamList = {
+  Home: UserData;
+  Profile: Partial<UserData>;
+  FavoriteFood: FoodDetails;
+};
+
+export type HomeScreenProps = CompositeScreenProps<
+  BottomTabScreenProps<TabParamList, 'Home'>,
+  NativeStackScreenProps<StackType>
+>;
+
+export type NavbarProps = {
+  navigation: HomeScreenProps['navigation'];
+  params: TabParamList['Home'];
+};
+
+export interface CardProps extends Food {
+  navigate: NativeStackNavigationProp<StackType, 'Product'>['navigate'];
+}
+
+export interface PrimaryBtnProps {
+  title?: string;
+  onPress: () => void;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  disabled?: boolean
+}
+
+export interface ToggleProps {
+  selected: FoodType;
+  onSelect: (value: FoodType) => void;
+}
+
+export interface HeadingProps {
+  text: string;
+  styles?: StyleProp<TextStyle>;
+}
+
+export interface SearchBarProps {
+  placeholder: string;
+}
+
+export interface FavFoodCard extends FoodDetails {}
+
+export interface ThemeState {
+  isDay: boolean;
+  colors: typeof lightTheme;
+}
+
+export interface AuthState {
+  user: UserData | null;
+  token: string | null;
+  isLoggedIn: boolean;
+  loading: boolean;
+  error: string | null;
+
+  image?: string;
+}
+
+export interface FavoriteFoodState {
+  favorites: Food[];
+  loading: boolean;
+  error: string | null;
+}
+
+export interface Food {
+  _id: string,
+  foodName: string;
+  imageUrl: string;
   rating: number;
   ingredients: string[];
-  steps_to_prepare: string[];
-  food_type: 'Veg' | 'Non-Veg'
+  stepsToPrepare: string[];
+  foodType: 'Veg' | 'Non-Veg' | 'HYBRID';
+}
+
+export interface NewFood {
+  foodName: string;
+  imageUrl: string;
+  rating: number;
+  ingredients: string[];
+  stepsToPrepare: string[];
+  foodType: 'Veg' | 'Non-Veg' | 'HYBRID';
+}
+
+export interface FoodState {
+  foods: Food[];
+  loading: boolean;
+  error: string | null;
 }

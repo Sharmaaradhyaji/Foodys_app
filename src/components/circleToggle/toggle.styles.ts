@@ -9,21 +9,24 @@ export const createToggleStyles = (colors: {
   shadowColor: string;
   activeVeg: string;
   activeNonVeg: string;
+  Hybrid: string
 }) =>
   StyleSheet.create({
     toggleContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      alignSelf: 'center',
       backgroundColor: colors.secondaryBackground,
       borderRadius: 20,
-      width: wp(49),
+      width: wp(70),
       elevation: 5,
       shadowColor: colors.shadowColor,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
     },
+    
     option: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -38,15 +41,18 @@ export const createToggleStyles = (colors: {
     activeNonVeg: {
       backgroundColor: colors.activeNonVeg,
     },
+    activeHybrid: {
+      backgroundColor: colors.Hybrid,
+    },
     circle: {
       width: 12,
       height: 12,
-      borderRadius: 20,
-      marginRight: 6,
+      borderRadius: 18,
+      marginRight: 4,
       backgroundColor: '#dc3545',
     },
     label: {
-      fontSize: 16,
+      fontSize: 15,
       fontWeight: '600',
       color: colors.text,
     },

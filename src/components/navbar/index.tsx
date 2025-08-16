@@ -3,9 +3,9 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { navbarText } from '../../globals/constants/constants';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../store/store';
-import { toggleTheme } from '../../store/themeSlice';
 import { createNavbarStyles } from './navbar.styles';
+import { toggleTheme } from '../../store/slices/themeSlice';
+import { AppDispatch, RootState } from '../../store';
 
 const Navbar: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

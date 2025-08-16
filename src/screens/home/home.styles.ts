@@ -28,10 +28,11 @@ export const createHomeStyles = (colors: {
     },
     vegToggle: {
       flexDirection: 'row',
-      margin: hp('3%'),
-      justifyContent: 'space-between',
+      marginTop: hp('3%'),
+      marginBottom: hp('3%'),
+      justifyContent: 'space-around',
       alignSelf: 'center',
-      width: wp('50%'),
+      width: wp('70%'),
     },
     heroContainer: {
       flexDirection: 'row',
@@ -66,5 +67,33 @@ export const createHomeStyles = (colors: {
       alignItems: 'center',
       elevation: 5,
       zIndex: 99,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    loadingText: {
+      marginTop: 10,
+      color: colors.text,
+    },
+    errorContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+    },
+    errorText: {
+      color: 'red',
+      textAlign: 'center',
+    },
+    retryButton: {
+      marginTop: 15,
+      padding: 10,
+      backgroundColor: colors.themePrimaryOrange,
+      borderRadius: 8,
+    },
+    retryText: {
+      color: 'white',
     },
   });

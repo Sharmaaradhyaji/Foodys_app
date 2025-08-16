@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { darkTheme, lightTheme } from '../globals/globals';
-
-interface ThemeState {
-  isDay: boolean;
-  colors: typeof lightTheme;
-}
+import { ThemeState } from '../../types';
+import { darkTheme, lightTheme } from '../../globals/globals';
 
 const initialState: ThemeState = {
   isDay: true,

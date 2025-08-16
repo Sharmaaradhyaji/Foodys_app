@@ -1,23 +1,48 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, FlatList, Text } from 'react-native';
-import Card from '../../components/card';
-import { useNavigation } from '@react-navigation/native';
-import { RootState } from '../../store/store';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { useAppDispatch } from '../../store/hooks';
+import { fetchFavorites } from '../../store/slices/favoriteFoodSlice';
 import { createFavFoodStyles } from './favFood.styles';
+import Card from '../../components/card';
+import { favoriteFoodsText } from '../../globals/constants/constants';
 
 export default function FavoriteFoodScreen() {
-  const navigation = useNavigation<any>();
-  const favorites = useSelector(
-    (state: RootState) => state.favoriteFood.favorites,
-  );
-  const theme = useSelector((state: RootState) => state.theme.colors);
-  const colors = {
-    ...theme,
-    themePrimaryOrange: theme.primary,
-  };
+  const navigation = useNavigation();
+  const dispatch = useAppDispatch();
 
+  const { favorites, loading, error } = useSelector(
+    (state: RootState) => state.favoriteFood
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchFavorites())
+    }, [dispatch])
+  );
+
+  const theme = useSelector((state: RootState) => state.theme.colors);
+  const colors = { ...theme, themePrimaryOrange: theme.primary };
   const stylesFavFood = createFavFoodStyles(colors);
+
+  if (loading) {
+    return (
+      <View style={stylesFavFood.emptyContainer}>
+        <Text style={stylesFavFood.emptyText}>{favoriteFoodsText.loadingFavs}</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={stylesFavFood.emptyContainer}>
+        <Text style={stylesFavFood.emptyText}>{error}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={stylesFavFood.rootContainer}>
       {favorites.length === 0 ? (
@@ -27,20 +52,20 @@ export default function FavoriteFoodScreen() {
       ) : (
         <FlatList
           data={favorites}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item) => item._id}
           numColumns={2}
           columnWrapperStyle={stylesFavFood.columnWrapper}
           contentContainerStyle={stylesFavFood.listContent}
           renderItem={({ item }) => (
             <View style={stylesFavFood.cardView}>
               <Card
-                id={item.id}
-                title={item.food_name}
-                image={item.image_url}
+                _id={item._id}
+                foodName={item.foodName}
+                imageUrl={item.imageUrl}
                 rating={item.rating}
                 ingredients={item.ingredients}
-                steps_to_prepare={item.steps_to_prepare}
-                food_type={item.food_type}
+                stepsToPrepare={item.stepsToPrepare}
+                foodType={item.foodType}
                 navigate={navigation.navigate}
               />
             </View>

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { theme } from '../../globals/constants/constants';
-import { hp, wp } from '../../globals/globals';
+import { brand, hp, wp } from '../../globals/globals';
 
 export const stylesProfile = StyleSheet.create({
   container: {
@@ -14,13 +14,45 @@ export const stylesProfile = StyleSheet.create({
     alignSelf: 'center',
     color: theme.themePrimaryOrange,
   },
-  image: {
+  imageWrapper: {
     alignSelf: 'center',
-    marginBottom: hp(1.2),
+    marginVertical: hp(1),
+    width: wp(30),
+    height: wp(30),
+    borderRadius: 18,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: brand.white,
+    borderWidth: 1,
+    borderColor: theme.themePrimaryOrange,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  cameraOutline: {
+    position: 'absolute',
+    bottom: 5,
+    right: 5,
+    backgroundColor: theme.themePrimaryOrange,
+    borderRadius: 18,
+    padding: 4,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 1 },
   },
   card: {
     backgroundColor: theme.boxColorOverPage,
-    borderRadius: wp(5),
+    borderRadius: 18,
     padding: wp(5),
     elevation: 9,
     shadowColor: theme.shadowColor,

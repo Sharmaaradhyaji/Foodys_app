@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider, useSelector } from 'react-redux';
-import { RootState, store } from './src/store/store';
+import { RootState, store } from './src/store';
 import { StackNavigator } from './src/navigation/stackNavigation';
 import { createGlobalStyles } from './src/globals/globals';
 import { theme } from './src/globals/constants/constants';
