@@ -20,10 +20,12 @@ const Card = memo((props: CardProps) => {
     _id,
     foodName,
     imageUrl,
-    rating,
+    averageRating,
+    ratings,
     ingredients,
     stepsToPrepare,
     foodType,
+    category,
     navigate,
   } = props;
 
@@ -32,19 +34,23 @@ const Card = memo((props: CardProps) => {
       _id,
       foodName,
       imageUrl,
-      rating,
+      averageRating,
+      ratings,
       ingredients,
       stepsToPrepare,
       foodType,
+      category
     });
   }, [
     _id,
     foodName,
     imageUrl,
-    rating,
+    averageRating,
+    ratings,
     ingredients,
     stepsToPrepare,
     foodType,
+    category,
     navigate,
   ]);
 
@@ -68,7 +74,9 @@ const Card = memo((props: CardProps) => {
 
           <View style={stylesCard.ratingRow}>
             <Icon name="star" size={hp(2)} color={theme.ratingColor} />
-            <Text style={stylesCard.ratingText}>{rating}</Text>
+            <Text style={stylesCard.ratingText}>
+              {typeof averageRating === 'number' ? averageRating.toFixed(1) : '0.0'}
+            </Text>
           </View>
         </View>
       </View>

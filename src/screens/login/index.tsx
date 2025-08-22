@@ -1,110 +1,96 @@
-import {
-  Alert,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-  TextInput,
-} from 'react-native';
 import React, { useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { stylesLogin } from './login.styles';
+import { ScrollView, Text, View, TextInput, Pressable } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Toast from 'react-native-toast-message';
 import PrimaryBtn from '../../components/button';
-import { alertText, emailRegex, passwordRegex, signinText } from '../../globals/constants/constants';
-import { StackType } from '../../types';
-import { fetchUser, loginUser, setToken } from '../../store/slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { RootState } from '../../store';
+import { fetchUser, loginUser } from '../../store/slices/authSlice';
+import { signinText } from '../../globals/constants/constants';
+import { stylesLogin } from './login.styles';
+import { StackTypeApp } from '../../types';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
 
-type Props = NativeStackScreenProps<StackType, 'Login'>;
-
-const Login: React.FC<Props> = ({ navigation }) => {
+const Login = () => {
   const dispatch = useAppDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const { loading } = useAppSelector((state: RootState) => state.auth);
 
-  const isValidEmail = (email: string) => {
-    return emailRegex.test(email);
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const isValidPassword = (password: string) => {
-    return passwordRegex.test(password);
-  };
+  const navigation =
+    useNavigation<NativeStackNavigationProp<StackTypeApp, 'Login'>>();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert(alertText.unfilledDetails);
-      return;
-    }
-
-    if (!isValidEmail(email)) {
-      Alert.alert(signinText.validation.alertEmail);
-      return;
-    }
-
-    if (!isValidPassword(password)) {
-      Alert.alert(signinText.validation.alertPassword);
-      return;
-    }
-
-    dispatch(loginUser({ email, password }))
-      .unwrap()
-      .then(res => {
-        const token = res.accessToken;
-        if (token) {
-          dispatch(setToken(token));
-          return dispatch(fetchUser()).unwrap();
-        }
-      })
-      .then(() => {
-        navigation.replace('Start', {
-          screen: 'Home',
-          params: { email, password },
-        });
-      })
-      .catch((error: any) => {
-        Alert.alert(error || signinText.loginFailed);
+      Toast.show({
+        type: 'error',
+        text1: signinText.validation.missingDetails,
       });
+      return;
+    }
+
+    try {
+      await dispatch(loginUser({ email, password })).unwrap();
+      await dispatch(fetchUser()).unwrap();
+
+      navigation.replace('Start');
+    } catch (error: unknown) {
+      let message = signinText.loginFailed;
+
+      if (error instanceof Error) {
+        message = error.message;
+      } else if (typeof error === 'string') {
+        message = error;
+      }
+
+      Toast.show({
+        type: 'error',
+        text1: signinText.loginFailed,
+        text2: message,
+      });
+    }
   };
 
-  const handleSignUp = () => {
-    navigation.replace('Signup');
-  };
+  const handleSignUp = () => navigation.replace('Signup');
 
   return (
-    <ScrollView>
-      <View style={stylesLogin.Box}>
-        <Text style={stylesLogin.heading}>{signinText.Heading}</Text>
-        <Text style={stylesLogin.para}>{signinText.subHeading}</Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <KeyboardAwareScrollView>
+        <View style={stylesLogin.Box}>
+          <Text style={stylesLogin.heading}>{signinText.Heading}</Text>
+          <Text style={stylesLogin.para}>{signinText.subHeading}</Text>
 
-        <TextInput
-          placeholder={signinText.placeHolders.email}
-          value={email}
-          onChangeText={setEmail}
-          style={stylesLogin.inputBox}
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
+          <TextInput
+            placeholder={signinText.placeHolders.email}
+            value={email}
+            onChangeText={setEmail}
+            style={stylesLogin.inputBox}
+            autoCapitalize="none"
+            keyboardType="email-address"
+          />
 
-        <TextInput
-          placeholder={signinText.placeHolders.password}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          style={stylesLogin.inputBox}
-        />
+          <TextInput
+            placeholder={signinText.placeHolders.password}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            style={stylesLogin.inputBox}
+          />
 
-        <PrimaryBtn
-         title={loading ? signinText.loading : signinText.submitButton}
-         onPress={handleLogin} 
-         disabled={loading}/>
-      </View>
+          <PrimaryBtn
+            title={loading ? signinText.loading : signinText.submitButton}
+            onPress={handleLogin}
+            disabled={loading}
+          />
 
-      <Text style={stylesLogin.textLogin}>{signinText.textLog}</Text>
-      <Pressable onPress={handleSignUp}>
-        <Text style={stylesLogin.link}>{signinText.textLink}</Text>
-      </Pressable>
+          <Text style={stylesLogin.textLogin}>{signinText.textLog}</Text>
+          <Pressable onPress={handleSignUp}>
+            <Text style={stylesLogin.link}>{signinText.textLink}</Text>
+          </Pressable>
+        </View>
+      </KeyboardAwareScrollView>
     </ScrollView>
   );
 };

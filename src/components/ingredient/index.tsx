@@ -2,7 +2,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { ingredientStyles } from './ingredient.styles';
 
-const Ingredients = ({text}:any) => {
+type IngredientProps = {
+  text: string;
+  style?: object
+};
+
+const Ingredients: React.FC<IngredientProps> = ({text}) => {
   return (
     <View style={ingredientStyles.container}>
         <Text style={ingredientStyles.text}>{text}</Text>

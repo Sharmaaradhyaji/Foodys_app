@@ -3,7 +3,12 @@ import React from 'react';
 import { detailsStyle } from './detail.styles';
 import { profileText } from '../../globals/constants/constants';
 
-const Details = ({name, detail}: any) => {
+type Detail = {
+  name: string
+  detail: string
+} 
+
+const Details = ({name, detail}: Detail) => {
   return (
     <View style={detailsStyle.data}>
       <Text style={detailsStyle.label}>{detail}</Text>

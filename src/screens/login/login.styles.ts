@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
-import { hp, wp, lightTheme } from '../../globals/globals';
-import { theme } from '../../globals/constants/constants';
+import { StyleSheet } from "react-native";
+import { hp, lightTheme, wp } from "../../globals/globals";
+import { theme } from "../../globals/constants/constants";
 
 export const stylesLogin = StyleSheet.create({
   heading: {
@@ -42,8 +42,6 @@ export const stylesLogin = StyleSheet.create({
     fontSize: wp(4),
     marginTop: hp(2),
     alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
     textAlign: 'center',
     width: wp(70),
     color: theme.themeSecondaryBlack,
@@ -55,4 +53,10 @@ export const stylesLogin = StyleSheet.create({
     textDecorationLine: 'underline',
     marginBottom: hp(0.9),
   },
+  errorText: {
+    color: 'red',
+    fontSize: wp(4),
+    marginLeft: wp(5),
+  },
 });
+

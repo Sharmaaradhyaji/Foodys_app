@@ -1,16 +1,13 @@
 import { TextInput, View } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { createSearchbarStyles } from './searchbar.styles';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { theme } from '../../globals/constants/constants';
-
 import * as Animatable from 'react-native-animatable';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import { SearchBarProps } from '../../types';
 
-const SearchBar = (props: SearchBarProps) => {
-  const [text, setText] = useState('');
+const SearchBar = ({ placeholder, value, onChangeText }: SearchBarProps) => {
   const theme = useSelector((state: RootState) => state.theme.colors);
   const stylesSearchbar = createSearchbarStyles(theme);
 
@@ -26,9 +23,9 @@ const SearchBar = (props: SearchBarProps) => {
           <Icon name="search" size={20} style={stylesSearchbar.icon} />
         </Animatable.View>
         <TextInput
-          placeholder={props.placeholder}
-          value={text}
-          onChangeText={setText}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={onChangeText}
           style={stylesSearchbar.inputBox}
         />
       </View>

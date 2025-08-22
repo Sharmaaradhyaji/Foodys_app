@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
@@ -7,21 +7,35 @@ import { useAppDispatch } from '../../store/hooks';
 import { fetchFavorites } from '../../store/slices/favoriteFoodSlice';
 import { createFavFoodStyles } from './favFood.styles';
 import Card from '../../components/card';
-import { favoriteFoodsText } from '../../globals/constants/constants';
+import {
+  addFoodText,
+  favoriteFoodsText,
+} from '../../globals/constants/constants';
+import Toast from 'react-native-toast-message';
 
 export default function FavoriteFoodScreen() {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
   const { favorites, loading, error } = useSelector(
-    (state: RootState) => state.favoriteFood
+    (state: RootState) => state.favoriteFood,
   );
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(fetchFavorites())
-    }, [dispatch])
+      dispatch(fetchFavorites());
+    }, [dispatch]),
   );
+
+  useEffect(() => {
+    if (error) {
+      Toast.show({
+        type: 'error',
+        text1: addFoodText.alertErrorText1,
+        text2: error,
+      });
+    }
+  }, [error]);
 
   const theme = useSelector((state: RootState) => state.theme.colors);
   const colors = { ...theme, themePrimaryOrange: theme.primary };
@@ -30,15 +44,9 @@ export default function FavoriteFoodScreen() {
   if (loading) {
     return (
       <View style={stylesFavFood.emptyContainer}>
-        <Text style={stylesFavFood.emptyText}>{favoriteFoodsText.loadingFavs}</Text>
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={stylesFavFood.emptyContainer}>
-        <Text style={stylesFavFood.emptyText}>{error}</Text>
+        <Text style={stylesFavFood.emptyText}>
+          {favoriteFoodsText.loadingFavs}
+        </Text>
       </View>
     );
   }
@@ -52,7 +60,7 @@ export default function FavoriteFoodScreen() {
       ) : (
         <FlatList
           data={favorites}
-          keyExtractor={(item) => item._id}
+          keyExtractor={item => item._id}
           numColumns={2}
           columnWrapperStyle={stylesFavFood.columnWrapper}
           contentContainerStyle={stylesFavFood.listContent}
@@ -62,10 +70,12 @@ export default function FavoriteFoodScreen() {
                 _id={item._id}
                 foodName={item.foodName}
                 imageUrl={item.imageUrl}
-                rating={item.rating}
+                averageRating={item.averageRating ?? 0}
+                ratings={item.ratings}
                 ingredients={item.ingredients}
                 stepsToPrepare={item.stepsToPrepare}
                 foodType={item.foodType}
+                category={item.category}
                 navigate={navigation.navigate}
               />
             </View>

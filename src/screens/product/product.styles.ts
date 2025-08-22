@@ -21,7 +21,7 @@ export const createProductStyles = (colors: {
       paddingBottom: hp(2),
       backgroundColor: colors.background,
       flex: 1,
-      gap: 2
+      gap: 2,
     },
 
     heading: {
@@ -72,6 +72,15 @@ export const createProductStyles = (colors: {
       padding: hp(1),
     },
 
+    backButton: {
+      position: 'absolute',
+      top: 16,
+      left: 16,
+      backgroundColor: colors.secondaryBackground,
+      borderRadius: 20,
+      padding: hp(1),
+    },
+
     metaRow: {
       position: 'absolute',
       bottom: 16,
@@ -83,7 +92,7 @@ export const createProductStyles = (colors: {
     },
 
     vegTag: {
-      backgroundColor: colors.card,
+      backgroundColor: colors.secondaryBackground,
       paddingVertical: hp(1.2),
       paddingHorizontal: wp(2),
       borderRadius: 10,
@@ -98,7 +107,7 @@ export const createProductStyles = (colors: {
     rating: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.card,
+      backgroundColor: colors.secondaryBackground,
       paddingVertical: 4,
       paddingHorizontal: wp(2),
       borderRadius: 12,
@@ -166,5 +175,21 @@ export const createProductStyles = (colors: {
       paddingHorizontal: wp(3),
       elevation: 7,
       gap: 9,
+    },
+
+    ratings: {
+      alignItems: 'center',
+      backgroundColor: colors.card,
+      borderRadius: 16,
+      marginVertical: hp(1),
+      paddingVertical: hp(1),
+      paddingHorizontal: wp(3),
+      elevation: 7,
+      paddingBottom: 21,
+      gap: 9,
+    },
+
+    ratingCount: {
+      color: colors.text,
     },
   });

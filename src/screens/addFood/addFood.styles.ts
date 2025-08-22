@@ -118,4 +118,7 @@ export const createAddFoodStyles = (colors: {
       color: brand.primary,
       marginTop: 10,
     },
+    errorText: {
+      
+    }
   });

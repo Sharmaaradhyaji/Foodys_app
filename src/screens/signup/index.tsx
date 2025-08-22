@@ -1,182 +1,226 @@
+import React from 'react';
 import {
-  Alert,
   Pressable,
-  ScrollView,
   Text,
   View,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { stylesSignUp } from './signup.styles';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import PrimaryBtn from '../../components/button';
-import {
-  alertText,
-  emailRegex,
-  namePlaceRegex,
-  numberRegex,
-  passwordRegex,
-  signupText,
-} from '../../globals/constants/constants';
-import { StackType } from '../../types';
-import { signupUser } from '../../store/slices/authSlice';
-import { RootState } from '../../store';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-type Props = NativeStackScreenProps<StackType, 'Signup'>;
+import { RootState } from '../../store';
+import { signupUser } from '../../store/slices/authSlice';
+import Toast from 'react-native-toast-message';
+import {
+  signupText,
+  signupValidationMessages as validation,
+} from '../../globals/constants/constants';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { stylesSignup } from './signup.styles';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
+import { StackTypeApp, UserData } from '../../types';
+import { hp } from '../../globals/globals';
 
-const Signup: React.FC<Props> = ({ navigation }) => {
+export const SignupSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, validation.name.min)
+    .required(validation.name.required),
+  email: Yup.string()
+    .email(validation.email.invalid)
+    .required(validation.email.required),
+  number: Yup.string()
+    .matches(/^\d{10}$/, validation.number.invalid)
+    .required(validation.number.required),
+  place: Yup.string()
+    .min(2, validation.place.min)
+    .required(validation.place.required),
+  password: Yup.string()
+    .min(6, validation.password.min)
+    .matches(/(?=.*[a-z])/, validation.password.lowercase)
+    .matches(/(?=.*[A-Z])/, validation.password.uppercase)
+    .matches(/(?=.*\d)/, validation.password.number)
+    .matches(/(?=.*[@$!%*?&])/, validation.password.specialChar)
+    .required(validation.password.required),
+  gender: Yup.string().required(validation.gender.required),
+});
+
+const Signup = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<StackTypeApp, 'Signup'>>();
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state: RootState) => state.auth);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [number, setNumber] = useState('');
-  const [gender, setGender] = useState(signupText.radio.male);
-  const [place, setPlace] = useState('');
-  const [password, setPassword] = useState('');
+  const handleSignUp = async (values: UserData) => {
+    try {
+      await dispatch(signupUser(values)).unwrap();
+      Toast.show({
+        type: 'success',
+        text1: signupText.signupSuccessText1,
+        text2: signupText.signupSuccessText2,
+      });
+      navigation.navigate('Login');
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : signupText.signUpFailedAlert;
 
-  const checkDetails = () => {
-    if (!namePlaceRegex.test(name)) {
-      Alert.alert(signupText.validation.nameLength);
-      return false;
-    }
-
-    if (!emailRegex.test(email)) {
-      Alert.alert(signupText.validation.validEmail);
-      return false;
-    }
-
-    if (!numberRegex.test(number)) {
-      Alert.alert(signupText.validation.validNumber);
-      return false;
-    }
-
-    return true;
-  };
-
-  const checkPassword = () => {
-    if (!passwordRegex.test(password)) {
-      Alert.alert(signupText.validation.specialCharPassword);
-      return false;
-    }
-
-    if (!namePlaceRegex.test(place)) {
-      Alert.alert(signupText.validation.placeLength);
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSignUp = () => {
-    if (!name || !email || !number || !gender || !place || !password) {
-      Alert.alert(alertText.unfilledDetails);
-      return;
-    }
-
-    const isDetailsValid = checkDetails();
-    const isPasswordValid = checkPassword();
-
-    if (isDetailsValid && isPasswordValid) {
-      dispatch(signupUser({ name, email, number, gender, place, password }))
-        .unwrap()
-        .then(() => {
-          navigation.navigate('Login');
-        })
-        .catch(err => {
-          Alert.alert(signupText.signUpFailedAlert, err);
-        });
+      Toast.show({
+        type: 'error',
+        text1: signupText.signUpFailedAlert,
+        text2: message,
+      });
     }
   };
 
-  const handleLogin = () => {
-    navigation.replace('Login');
-  };
+  const handleLogin = () => navigation.replace('Login');
 
   return (
-    <ScrollView>
-      <View style={stylesSignUp.Box}>
-        <Text style={stylesSignUp.heading}>{signupText.Heading}</Text>
-        <Text style={stylesSignUp.para}>{signupText.subHeading}</Text>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{ flexGrow: 1, padding: hp(2) }}
+      enableOnAndroid
+      extraScrollHeight={hp(10)}
+      keyboardOpeningTime={250}
+    >
+      <View style={stylesSignup.Box}>
+        <Text style={stylesSignup.heading}>{signupText.Heading}</Text>
+        <Text style={stylesSignup.para}>{signupText.subHeading}</Text>
 
-        <TextInput
-          placeholder={signupText.placeHolders.name}
-          value={name}
-          onChangeText={setName}
-          style={stylesSignUp.inputBox}
-        />
+        <Formik
+          initialValues={{
+            name: '',
+            email: '',
+            number: '',
+            place: '',
+            password: '',
+            gender: 'Male',
+          }}
+          validationSchema={SignupSchema}
+          validateOnChange
+          validateOnBlur
+          onSubmit={handleSignUp}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+            setFieldTouched,
+            setFieldValue,
+          }) => (
+            <View style={{ marginVertical: hp(0.2) }}>
+              <TextInput
+                placeholder={signupText.placeHolders.name}
+                value={values.name}
+                onChangeText={text => {
+                  handleChange('name')(text);
+                  setFieldTouched('name', true, false);
+                }}
+                onBlur={handleBlur('name')}
+                style={stylesSignup.inputBox}
+              />
+              <Text style={stylesSignup.errorText}>
+                {touched.name && errors.name ? errors.name : ' '}
+              </Text>
 
-        <TextInput
-          placeholder={signupText.placeHolders.email}
-          value={email}
-          onChangeText={setEmail}
-          style={stylesSignUp.inputBox}
-          keyboardType="email-address"
-        />
+              <TextInput
+                placeholder={signupText.placeHolders.email}
+                value={values.email}
+                onChangeText={text => {
+                  handleChange('email')(text);
+                  setFieldTouched('email', true, false);
+                }}
+                onBlur={handleBlur('email')}
+                style={stylesSignup.inputBox}
+                keyboardType="email-address"
+              />
+              <Text style={stylesSignup.errorText}>
+                {touched.email && errors.email ? errors.email : ' '}
+              </Text>
 
-        <TextInput
-          placeholder={signupText.placeHolders.number}
-          value={number}
-          onChangeText={setNumber}
-          style={stylesSignUp.inputBox}
-          keyboardType="numeric"
-        />
+              <TextInput
+                placeholder={signupText.placeHolders.number}
+                value={values.number}
+                onChangeText={text => {
+                  handleChange('number')(text);
+                  setFieldTouched('number', true, false);
+                }}
+                onBlur={handleBlur('number')}
+                style={stylesSignup.inputBox}
+                keyboardType="numeric"
+              />
+              <Text style={stylesSignup.errorText}>
+                {touched.number && errors.number ? errors.number : ' '}
+              </Text>
 
-        <TextInput
-          placeholder={signupText.placeHolders.place}
-          value={place}
-          onChangeText={setPlace}
-          style={stylesSignUp.inputBox}
-        />
+              <TextInput
+                placeholder={signupText.placeHolders.place}
+                value={values.place}
+                onChangeText={text => {
+                  handleChange('place')(text);
+                  setFieldTouched('place', true, false);
+                }}
+                onBlur={handleBlur('place')}
+                style={stylesSignup.inputBox}
+              />
+              <Text style={stylesSignup.errorText}>
+                {touched.place && errors.place ? errors.place : ' '}
+              </Text>
 
-        <View style={stylesSignUp.radioGroup}>
-          <TouchableOpacity
-            style={stylesSignUp.radioOption}
-            onPress={() => setGender('Male')}
-            activeOpacity={0.9}
-          >
-            <View style={stylesSignUp.radioCircle}>
-              {gender === 'Male' && <View style={stylesSignUp.radioSelected} />}
+              <View style={stylesSignup.radioGroup}>
+                {['Male', 'Female'].map(option => (
+                  <TouchableOpacity
+                    key={option}
+                    style={stylesSignup.radioOption}
+                    onPress={() => {
+                      setFieldValue('gender', option);
+                      setFieldTouched('gender', true, false);
+                    }}
+                    activeOpacity={0.9}
+                  >
+                    <View style={stylesSignup.radioCircle}>
+                      {values.gender === option && (
+                        <View style={stylesSignup.radioSelected} />
+                      )}
+                    </View>
+                    <Text style={stylesSignup.radioLabel}>{option}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              <TextInput
+                placeholder={signupText.placeHolders.password}
+                value={values.password}
+                onChangeText={text => {
+                  handleChange('password')(text);
+                  setFieldTouched('password', true, false);
+                }}
+                onBlur={handleBlur('password')}
+                secureTextEntry
+                style={stylesSignup.inputBox}
+              />
+              <Text style={stylesSignup.errorText}>
+                {touched.password && errors.password ? errors.password : ' '}
+              </Text>
+
+              <PrimaryBtn
+                title={loading ? signupText.signingUp : signupText.submitButton}
+                onPress={handleSubmit}
+                disabled={loading}
+              />
+
+              <Text style={stylesSignup.textLogin}>{signupText.textLog}</Text>
+              <Pressable onPress={handleLogin}>
+                <Text style={stylesSignup.link}>{signupText.textLink}</Text>
+              </Pressable>
             </View>
-            <Text style={stylesSignUp.radioLabel}>Male</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={stylesSignUp.radioOption}
-            onPress={() => setGender('Female')}
-            activeOpacity={0.9}
-          >
-            <View style={stylesSignUp.radioCircle}>
-              {gender === 'Female' && (
-                <View style={stylesSignUp.radioSelected} />
-              )}
-            </View>
-            <Text style={stylesSignUp.radioLabel}>Female</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TextInput
-          placeholder={signupText.placeHolders.password}
-          value={password}
-          onChangeText={setPassword}
-          style={stylesSignUp.inputBox}
-          secureTextEntry
-          keyboardType="ascii-capable"
-        />
-
-        <PrimaryBtn
-          title={loading ? signupText.signingUp : signupText.submitButton}
-          onPress={handleSignUp}
-          disabled={loading}
-        />
+          )}
+        </Formik>
       </View>
-
-      <Text style={stylesSignUp.textLogin}>{signupText.textLog}</Text>
-      <Pressable onPress={handleLogin}>
-        <Text style={stylesSignUp.link}>{signupText.textLink}</Text>
-      </Pressable>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

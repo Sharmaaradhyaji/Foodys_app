@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { api } from '../../api/axiosConfig';
 import { FavoriteFoodState, Food } from '../../types';
+import { favoriteFoodsText } from '../../globals/constants/constants';
 
 const initialState: FavoriteFoodState = {
   favorites: [],
@@ -55,13 +56,31 @@ const favoriteFoodSlice = createSlice({
       })
       .addCase(fetchFavorites.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error?.message ?? 'Failed to load favorites';
+        state.error = action.error?.message ?? favoriteFoodsText.failedToLoad;
+      })
+      .addCase(addFavoriteFood.pending, state => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(addFavoriteFood.fulfilled, (state, action) => {
+        state.loading = false;
         state.favorites = action.payload;
       })
+      .addCase(addFavoriteFood.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message ?? favoriteFoodsText.failedToAdd;
+      })
+      .addCase(removeFavoriteFood.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(removeFavoriteFood.fulfilled, (state, action) => {
+        state.loading = false;
         state.favorites = action.payload;
+      })
+      .addCase(removeFavoriteFood.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message ?? favoriteFoodsText.failedToRemove;
       });
   },
 });

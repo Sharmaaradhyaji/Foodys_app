@@ -10,12 +10,19 @@ export const signinText = {
   submitButton: 'Submit',
   validation: {
     alertEmail: 'Enter a valid email address',
+    invalidEmail: 'Invalid Email',
+    missingDetails: 'Missing Details',
+    invalidPassword: 'Invalid Password',
     alertPassword:
       'Password must include at least one special character: #, $, *, or %',
     alertPasswordLength: 'Password must be at least 6 characters long',
+    alertPasswordNumber: 'Password must have at least one number',
+    alertPasswordLowercase: 'Password must have at least one lowercase letter',
+    alertPasswordUppercase: 'Password must have at least one uppercase letter',
   },
-  loading: "loading...",
-  loginFailed: 'Login failed'
+  loading: "Signing-in...",
+  loginFailed: 'Login failed',
+  signInSuccessfull: 'Login Successful',
 };
 
 export const signupText = {
@@ -46,22 +53,78 @@ export const signupText = {
     placeLength: 'Place must be at least 3 characters long',
   },
   signUpFailedAlert: 'Signup Failed',
-  signingUp: 'Signing Up...'
+  signingUp: 'Signing Up...',
+  signupSuccessText1: 'Signup Successful',
+  signupSuccessText2: 'Please login to continue',
 };
 
+export const signupValidationMessages = {
+  name: {
+    required: "*Name is required",
+    min: "*Name too short",
+  },
+  email: {
+    required: "*Email is required",
+    invalid: "*Invalid Email",
+  },
+  number: {
+    required: "*Number is required",
+    invalid: "*Enter valid 10-digit number",
+  },
+  place: {
+    required: "*Place is required",
+    min: "*Place too short",
+  },
+  password: {
+    required: "*Password is required",
+    min: "*Password must be at least 6 characters",
+    lowercase: "*Must include at least one lowercase letter",
+    uppercase: "*Must include at least one uppercase letter",
+    number: "*Must include at least one number",
+    specialChar: "*Must include at least one special character",
+  },
+  gender: {
+    required: "Select gender",
+  },
+};
+
+export const axiosConfigText = {
+  networkError: 'Network error',
+  sessionExpired: 'Session expired',
+  accessTokenRefreshed: 'Access token refreshed',
+  noRefreshToken: 'No refresh token',
+  noAcessReturned: 'No access token returned',
+  
+}
+
 export const profileText = {
-  alertLogoutSelect: 'Logged out',
+  alertLogoutSelect: 'Want to Log out?',
   alertLogoutConfirm: 'Are you sure, you want to log out?',
   notAvailable: 'N/A',
   Heading: 'Your Profile',
   logoutButton: 'Logout',
   logOutFailed: 'Logout Failed',
   selectImage: 'Select Image',
-  chooseOption: 'Choose an option'
+  chooseOption: 'Choose an option',
+  profileLoaded: 'Profile Loaded',
+  failedToloadProfile: 'Failed to load profile',
+  logOutSuccessfull: 'Logged out successfully',
+  profilePictureUpdated: 'Profile picture updated'
+};
+
+export const AUTH_MESSAGES = {
+  FAILED_LOAD_TOKEN: "Failed to load token",
+  FAILED_FETCH_USER: "Failed to fetch user",
+  SIGNUP_FAILED: "Signup failed",
+  LOGIN_FAILED: "Login failed",
+  LOGOUT_FAILED: "Logout failed",
 };
 
 export const favoriteFoodsText = {
-  loadingFavs: "Loading favorites…"
+  loadingFavs: "Loading favorites…",
+  failedToLoad: 'Failed to load Favorites',
+  failedToAdd: 'Failed to add Favss',
+  failedToRemove: 'Failed to remove Favss',
 }
 
 export const alertText = {
@@ -86,7 +149,8 @@ export const addFoodText = {
   permissionMessage: "App needs access to your camera",
   ok: "OK",
   cancel: "Cancel",
-  alertError: 'Error',
+  alertErrorText1: 'Error',
+  alertErrorText2: 'Camera permission denied',
   alertFillAllFields: "Please Fill All Fields.",
   alertEntervalidRating: 'Please enter a rating between 0 and 5',
   success: 'Success',
@@ -128,6 +192,9 @@ export const theme = {
   color444: '#444',
   color555: '#555',
   buttonBG: 'rgba(0,0,0,0.4)',
+
+  errorTextToast: '#800000',
+  infoBgToast: '#ff9966'
 };
 
 export const stringConstants = {
@@ -147,6 +214,7 @@ export const allColor = '#ffff08'
 
 export const cancel = 'cancel';
 export const ok = 'ok';
+export const somethingWentWrong = 'Something went wrong'
 
 export const color000 = '#000';
 export const color333 = '#333';

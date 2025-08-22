@@ -15,9 +15,16 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     width: '70%',
   },
+  buttonDisabled: {
+    backgroundColor: '#FFD2A6',
+  },
   buttonText: {
     fontWeight: 'bold',
-    fontSize: width * 0.04,
+    fontSize: height * 0.02,
     color: 'white',
+  },
+  textDisabled: {
+    color: '#fff',
+    opacity: 0.6,
   },
 });

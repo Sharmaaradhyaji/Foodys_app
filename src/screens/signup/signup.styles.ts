@@ -2,67 +2,79 @@ import { StyleSheet } from 'react-native';
 import { hp, lightTheme, wp } from '../../globals/globals';
 import { theme } from '../../globals/constants/constants';
 
-export const stylesSignUp = StyleSheet.create({
+
+export const stylesSignup = StyleSheet.create({
   heading: {
-    marginTop: hp(0.5),
     marginBottom: hp(1),
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: hp(4),
+    fontSize: wp(7),
   },
   Box: {
-    margin: hp(4),
-    marginTop: hp(2),
-    marginBottom: hp(4),
-    borderRadius: hp(6),
+    margin: hp(2),
+    marginTop: hp(1),
+    borderRadius: wp(10),
     gap: hp(2),
-    padding: hp(5),
+    padding: hp(4),
     backgroundColor: lightTheme.secondaryBackground,
     elevation: 4,
-    shadowColor: theme.shadowColor,
+    shadowColor: theme.color000,
     shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: hp(0.4) },
+    shadowOffset: { width: 0, height: 3 },
   },
   inputBox: {
     width: wp(70),
-    height: hp(7),
+    height: hp(6),
     backgroundColor: theme.inputBoxColor,
-    borderRadius: hp(3.5),
+    borderRadius: wp(30),
     paddingHorizontal: wp(6),
+    justifyContent: 'center',
     alignSelf: 'center',
     fontSize: hp(2),
-  },
-  Text: {
-    fontWeight: 'bold',
-    fontSize: wp(5),
+    marginVertical: hp(1),
   },
   para: {
     fontWeight: '500',
     fontSize: wp(5),
     textAlign: 'center',
+    marginBottom: hp(0.2),
   },
-  submitBtn: {
-    marginTop: hp(1),
-    alignSelf: 'center',
-    paddingVertical: hp(1.5),
-    borderRadius: hp(3),
+  radioGroup: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: hp(1),
+    gap: wp(6),
+  },
+  radioOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  radioCircle: {
+    height: wp(5),
+    width: wp(5),
+    borderRadius: wp(2.5),
+    borderWidth: 2,
+    borderColor: theme.themeSecondaryBlack,
     alignItems: 'center',
     justifyContent: 'center',
-    textAlign: 'center',
-    width: wp(10),
+    marginRight: wp(2),
   },
-  BtnText: {
-    fontWeight: 'bold',
+  radioSelected: {
+    width: wp(3),
+    height: wp(3),
+    borderRadius: wp(1.5),
+    backgroundColor: theme.themePrimaryOrange,
+  },
+  radioLabel: {
     fontSize: wp(4),
-    color: theme.cardColor,
   },
   textLogin: {
     fontWeight: 'bold',
     fontSize: wp(4),
-    marginTop: hp(1),
+    marginTop: hp(2),
     alignSelf: 'center',
     textAlign: 'center',
-    width: wp(50),
+    width: wp(70),
     color: theme.themeSecondaryBlack,
   },
   link: {
@@ -70,36 +82,17 @@ export const stylesSignUp = StyleSheet.create({
     fontSize: wp(4),
     color: theme.themePrimaryOrange,
     textDecorationLine: 'underline',
-    marginBottom: hp(1),
+    marginBottom: hp(0.9),
   },
-  radioGroup: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
+  errorText: {
+    color: 'red',
+    fontSize: wp(2.5),
+    marginLeft: wp(5),
   },
-  radioOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: wp(5),
+  errorWithSpace: {
+    height: hp(1)
   },
-  radioCircle: {
-    height: hp(2.5),
-    width: hp(2.5),
-    borderRadius: hp(1.25),
-    borderWidth: 2,
-    borderColor: theme.themePrimaryOrange,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: wp(2),
-  },
-  radioSelected: {
-    height: hp(1.2),
-    width: hp(1.2),
-    borderRadius: hp(0.6),
-    backgroundColor: theme.themePrimaryOrange,
-  },
-  radioLabel: {
-    fontSize: hp(2.2),
-    color: theme.color333,
-  },
+  textView: {
+    marginVertical: hp(0.5)
+  }
 });

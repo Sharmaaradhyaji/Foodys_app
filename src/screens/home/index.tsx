@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
   View,
   FlatList,
@@ -5,14 +6,13 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar';
 import Card from '../../components/card';
 import { Toggle } from '../../components/circleToggle';
 import { createHomeStyles } from './home.styles';
 import SearchBar from '../../components/searchbar';
 import { homeText, stringConstants } from '../../globals/constants/constants';
-import { HomeScreenProps } from '../../types';
+import { StackTypeApp } from '../../types';
 import LinearGradient from 'react-native-linear-gradient';
 import { hp, wp, brand } from '../../globals/globals';
 import { useSelector } from 'react-redux';
@@ -21,11 +21,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as Animatable from 'react-native-animatable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { showFoods } from '../../store/slices/foodSlice';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import Categories from '../../components/categories';
 
-const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
+const Home = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<StackTypeApp, 'Start'>>();
   const dispatch = useAppDispatch();
   const { foods, loading, error } = useAppSelector(state => state.food);
   const theme = useSelector((state: RootState) => state.theme.colors);
+
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const colors = { ...theme, themePrimaryOrange: theme.primary };
   const gradientColors = theme.gradient;
@@ -34,17 +41,27 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [vegOnly, setVegOnly] = useState<'Veg' | 'Non-Veg' | 'HYBRID'>(
     'HYBRID',
   );
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     dispatch(showFoods());
   }, [dispatch]);
 
-  const filteredData =
-    vegOnly === stringConstants.veg
-      ? foods.filter(item => item.foodType === stringConstants.veg)
-      : vegOnly === stringConstants.nonVeg
-      ? foods.filter(item => item.foodType === stringConstants.nonVeg)
-      : foods;
+  const filteredData = foods
+    .filter(item => {
+      if (vegOnly === stringConstants.veg)
+        return item.foodType === stringConstants.veg;
+      if (vegOnly === stringConstants.nonVeg)
+        return item.foodType === stringConstants.nonVeg;
+      return true;
+    })
+    .filter(item =>
+      item.foodName.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
+    .filter(item => {
+      if (!activeCategory) return true;
+      return item.category?.toLowerCase() === activeCategory.toLowerCase();
+    });
 
   return (
     <View style={stylesHome.container}>
@@ -120,12 +137,21 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
                   </Animatable.View>
                 </View>
 
-                <SearchBar placeholder={homeText.placeholderSearch} />
+                <SearchBar
+                  placeholder={homeText.placeholderSearch}
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
               </LinearGradient>
 
               <View style={stylesHome.vegToggle}>
                 <Toggle selected={vegOnly} onSelect={setVegOnly} />
               </View>
+
+              <Categories
+                activeCategory={activeCategory}
+                setActiveCategory={setActiveCategory}
+              />
             </>
           }
           renderItem={({ item }) => (
@@ -134,7 +160,8 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
                 _id={item._id}
                 foodName={item.foodName}
                 imageUrl={item.imageUrl}
-                rating={item.rating}
+                averageRating={item.averageRating ?? 0}
+                ratings={item.ratings}
                 ingredients={item.ingredients}
                 stepsToPrepare={item.stepsToPrepare}
                 foodType={item.foodType}
@@ -143,7 +170,8 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
                     _id: item._id,
                     foodName: item.foodName,
                     imageUrl: item.imageUrl,
-                    rating: item.rating,
+                    averageRating: item.averageRating,
+                    ratings: item.ratings,
                     ingredients: item.ingredients,
                     stepsToPrepare: item.stepsToPrepare,
                     foodType: item.foodType,

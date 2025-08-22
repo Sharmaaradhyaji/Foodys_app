@@ -1,7 +1,6 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import {
   CompositeScreenProps,
-  NavigatorScreenParams,
 } from '@react-navigation/native';
 import {
   NativeStackNavigationProp,
@@ -9,6 +8,7 @@ import {
 } from '@react-navigation/native-stack';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { lightTheme } from '../globals/globals';
+import { ToastConfigParams, ToastType} from 'react-native-toast-message';
 
 export interface UserData {
   name?: string;
@@ -23,25 +23,24 @@ export type FoodType = 'Veg' | 'Non-Veg' | 'HYBRID';
 
 export type FoodDetails = Food
 
-export type StackType = {
-  Signup: undefined;
-  Start: NavigatorScreenParams<TabParamList>;
-  Login: undefined;
-  Profile: UserData;
+export type StackTypeApp = {
+  Login: undefined
+  Signup: undefined
+  Start: undefined
+  Profile: undefined
   Product: FoodDetails;
   AddFood: { capturedImage?: string };
-  CameraScreen: undefined;
 };
 
 export type TabParamList = {
-  Home: UserData;
-  Profile: Partial<UserData>;
+  Home: undefined;
+  Profile: undefined
   FavoriteFood: FoodDetails;
 };
 
 export type HomeScreenProps = CompositeScreenProps<
   BottomTabScreenProps<TabParamList, 'Home'>,
-  NativeStackScreenProps<StackType>
+  NativeStackScreenProps<StackTypeApp>
 >;
 
 export type NavbarProps = {
@@ -50,7 +49,7 @@ export type NavbarProps = {
 };
 
 export interface CardProps extends Food {
-  navigate: NativeStackNavigationProp<StackType, 'Product'>['navigate'];
+  navigate: NativeStackNavigationProp<StackTypeApp, 'Product'>['navigate'];
 }
 
 export interface PrimaryBtnProps {
@@ -73,6 +72,8 @@ export interface HeadingProps {
 
 export interface SearchBarProps {
   placeholder: string;
+   value: string;
+  onChangeText: (text: string) => void;
 }
 
 export interface FavFoodCard extends FoodDetails {}
@@ -84,12 +85,28 @@ export interface ThemeState {
 
 export interface AuthState {
   user: UserData | null;
-  token: string | null;
-  isLoggedIn: boolean;
+  accessToken: string | null;
+  refreshToken: string | null;
   loading: boolean;
   error: string | null;
+  isInitialized: boolean
 
   image?: string;
+}
+
+type CustomToastType = ToastType | 'info';
+export interface CustomToastData {
+  text1?: string;
+  text2?: string;
+  type: CustomToastType;
+}
+
+export type CustomToastparams = ToastConfigParams<CustomToastData>
+
+export interface CustomToastProps extends CustomToastparams {
+  text1?: string;
+  text2?: string;
+  type: CustomToastType;
 }
 
 export interface FavoriteFoodState {
@@ -99,19 +116,21 @@ export interface FavoriteFoodState {
 }
 
 export interface Food {
-  _id: string,
+  _id: string;
   foodName: string;
   imageUrl: string;
-  rating: number;
+  averageRating: number; 
+  ratings: { userId: string; value: number }[];
   ingredients: string[];
   stepsToPrepare: string[];
   foodType: 'Veg' | 'Non-Veg' | 'HYBRID';
+  userRatings?: number
+  category?: string
 }
 
 export interface NewFood {
   foodName: string;
   imageUrl: string;
-  rating: number;
   ingredients: string[];
   stepsToPrepare: string[];
   foodType: 'Veg' | 'Non-Veg' | 'HYBRID';
@@ -122,3 +141,8 @@ export interface FoodState {
   loading: boolean;
   error: string | null;
 }
+
+export type CategoryProps = {
+  activeCategory: string | null;
+  setActiveCategory: React.Dispatch<React.SetStateAction<string | null>>;
+};
