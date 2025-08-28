@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   FlatList,
   Text,
   Pressable,
   ActivityIndicator,
+  Animated,
 } from 'react-native';
 import Navbar from '../../components/navbar';
 import Card from '../../components/card';
 import { Toggle } from '../../components/circleToggle';
 import { createHomeStyles } from './home.styles';
 import SearchBar from '../../components/searchbar';
-import { homeText, stringConstants } from '../../globals/constants/constants';
+import { FoodTypeEnum, homeText } from '../../globals/constants/constants';
 import { StackTypeApp } from '../../types';
 import LinearGradient from 'react-native-linear-gradient';
 import { hp, wp, brand } from '../../globals/globals';
@@ -24,72 +25,102 @@ import { showFoods } from '../../store/slices/foodSlice';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import Categories from '../../components/categories';
+import { NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
 
 const Home = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<StackTypeApp, 'Start'>>();
   const dispatch = useAppDispatch();
-  const { foods, loading, error } = useAppSelector(state => state.food);
+  const { foods, loading, loadingMore, error, page, hasMore } = useAppSelector(
+    state => state.food,
+  );
   const theme = useSelector((state: RootState) => state.theme.colors);
 
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-
   const colors = { ...theme, themePrimaryOrange: theme.primary };
   const gradientColors = theme.gradient;
   const stylesHome = createHomeStyles(colors);
 
-  const [vegOnly, setVegOnly] = useState<'Veg' | 'Non-Veg' | 'HYBRID'>(
-    'HYBRID',
-  );
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const lastScrollY = useRef(0);
+  const buttonAnim = useRef(new Animated.Value(0)).current;
+
+  const [vegOnly, setVegOnly] = useState<FoodTypeEnum>(FoodTypeEnum.HYBRID);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
 
   useEffect(() => {
-    dispatch(showFoods());
-  }, [dispatch]);
+    const handler = setTimeout(() => setDebouncedQuery(searchQuery), 400);
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
 
-  const filteredData = foods
-    .filter(item => {
-      if (vegOnly === stringConstants.veg)
-        return item.foodType === stringConstants.veg;
-      if (vegOnly === stringConstants.nonVeg)
-        return item.foodType === stringConstants.nonVeg;
-      return true;
-    })
-    .filter(item =>
-      item.foodName.toLowerCase().includes(searchQuery.toLowerCase()),
-    )
-    .filter(item => {
-      if (!activeCategory) return true;
-      return item.category?.toLowerCase() === activeCategory.toLowerCase();
-    });
+  useEffect(() => {
+    dispatch(
+      showFoods({
+        page: 1,
+        limit: 5,
+        foodType: vegOnly !== FoodTypeEnum.HYBRID ? vegOnly : undefined,
+        category: activeCategory ?? undefined,
+        search: debouncedQuery.trim() || undefined,
+      }),
+    );
+  }, [dispatch, vegOnly, activeCategory, debouncedQuery]);
+
+  const loadMore = () => {
+    if (loading || loadingMore || !hasMore) return;
+    dispatch(
+      showFoods({
+        page: page + 1,
+        limit: 5,
+        foodType: vegOnly !== FoodTypeEnum.HYBRID ? vegOnly : undefined,
+        category: activeCategory ?? undefined,
+        search: debouncedQuery.trim() || undefined,
+      }),
+    );
+  };
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const currentY = event.nativeEvent.contentOffset.y;
+    if (currentY > lastScrollY.current + 5) {
+      Animated.timing(buttonAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else if (currentY < lastScrollY.current - 5) {
+      Animated.timing(buttonAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+    lastScrollY.current = currentY;
+  };
 
   return (
     <View style={stylesHome.container}>
       <Navbar />
 
-      {loading && (
+      {loading && page === 1 && (
         <View style={stylesHome.loadingContainer}>
           <ActivityIndicator size="large" color={colors.themePrimaryOrange} />
-          <Text style={stylesHome.loadingText}>Loading foods...</Text>
+          <Text style={stylesHome.loadingText}>{homeText.LoadingFoods}</Text>
         </View>
       )}
 
       {!loading && error && (
         <View style={stylesHome.errorContainer}>
           <Text style={stylesHome.errorText}>{error}</Text>
-          <Pressable
-            style={stylesHome.retryButton}
-            onPress={() => dispatch(showFoods())}
-          >
+          <Pressable style={stylesHome.retryButton} onPress={() => loadMore()}>
             <Text style={stylesHome.retryText}>Retry</Text>
           </Pressable>
         </View>
       )}
 
-      {!loading && !error && (
+      {!error && (
         <FlatList
-          data={filteredData}
-          keyExtractor={item => item._id}
+          data={foods}
+          keyExtractor={(item, index) => item._id + '-' + index}
           numColumns={2}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -97,6 +128,13 @@ const Home = () => {
             paddingHorizontal: wp(4),
           }}
           columnWrapperStyle={{ gap: wp(2) }}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.5}
+          onScroll={event => {
+            scrollY.setValue(event.nativeEvent.contentOffset.y);
+            handleScroll(event);
+          }}
+          scrollEventThrottle={16}
           ListHeaderComponent={
             <>
               <LinearGradient
@@ -180,15 +218,47 @@ const Home = () => {
               />
             </View>
           )}
+          ListFooterComponent={
+            loadingMore ? (
+              <View style={stylesHome.footerContainer}>
+                <ActivityIndicator
+                  size="small"
+                  color={colors.themePrimaryOrange}
+                />
+                <Text style={stylesHome.footerText}>
+                  {homeText.LoadingMore}
+                </Text>
+              </View>
+            ) : null
+          }
         />
       )}
 
-      <Pressable
-        onPress={() => navigation.navigate('AddFood', { capturedImage: '' })}
-        style={stylesHome.addFavFood}
+      <Animated.View
+        style={[
+          stylesHome.addFavFood,
+          {
+            transform: [
+              {
+                translateY: buttonAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 100],
+                }),
+              },
+            ],
+            opacity: buttonAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [1, 0],
+            }),
+          },
+        ]}
       >
-        <Icon name="add" size={30} color={brand.white} />
-      </Pressable>
+        <Pressable
+          onPress={() => navigation.navigate('AddFood', { capturedImage: '' })}
+        >
+          <Icon name="add" size={30} color={brand.white} />
+        </Pressable>
+      </Animated.View>
     </View>
   );
 };

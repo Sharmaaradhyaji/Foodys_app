@@ -4,12 +4,11 @@ import {
   TextInput,
   Pressable,
   Alert,
-  ScrollView,
   View,
   TouchableOpacity,
   Image,
-  Platform,
-  PermissionsAndroid,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
@@ -19,15 +18,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { RootState } from '../../store';
 import {
   addFoodText,
-  color333,
-  color999,
+  categories,
+  CategoryEnum,
+  color3,
+  color9,
+  FoodTypeEnum,
   somethingWentWrong,
   white,
 } from '../../globals/constants/constants';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { addFood } from '../../store/slices/foodSlice';
 import { useAppDispatch } from '../../store/hooks';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';;
+import { requestCameraPermission } from '../../utils/permissions';
 
 const AddFood = () => {
   const navigation = useNavigation<NativeStackNavigationProp<StackTypeApp>>();
@@ -36,8 +39,11 @@ const AddFood = () => {
   const [image, setImage] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
-  const [foodType, setFoodType] = useState<'Veg' | 'Non-Veg'>('Veg');
-  const [category, setCategory] = useState<'Veg' | 'Non-Veg'>('Veg');
+  const [foodType, setFoodType] = useState<FoodTypeEnum>(FoodTypeEnum.VEG);
+  const [category, setCategory] = useState<CategoryEnum
+  >(CategoryEnum.INDIAN);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -46,7 +52,7 @@ const AddFood = () => {
   const colors = {
     ...theme,
     themePrimaryOrange: theme.primary,
-    color333,
+    color3,
   };
 
   const stylesAddFood = createAddFoodStyles(colors);
@@ -61,26 +67,6 @@ const AddFood = () => {
         { text: addFoodText.imageHandling.cancel, style: 'cancel' },
       ],
     );
-  };
-
-  const requestCameraPermission = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          {
-            title: addFoodText.cameraPermission,
-            message: addFoodText.permissionMessage,
-            buttonPositive: addFoodText.ok,
-            buttonNegative: addFoodText.cancel,
-          },
-        );
-        return granted === PermissionsAndroid.RESULTS.GRANTED;
-      } catch (err) {
-        return false;
-      }
-    }
-    return true;
   };
 
   const openCamera = async () => {
@@ -132,6 +118,7 @@ const AddFood = () => {
         ),
       );
       formData.append('foodType', foodType);
+      formData.append('category', category);
 
       const filename = image.split('/').pop() || `photo_${Date.now()}.jpg`;
       const fileType = filename?.split('.').pop();
@@ -166,91 +153,134 @@ const AddFood = () => {
   };
 
   return (
-    <ScrollView style={stylesAddFood.container}>
-      <Text style={stylesAddFood.heading}>Add New Food</Text>
+    <KeyboardAvoidingView style={stylesAddFood.container}>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 40 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text style={stylesAddFood.heading}>Add New Food</Text>
 
-      <View style={{ alignItems: 'center', marginBottom: 20 }}>
-        {image ? (
-          <TouchableOpacity onPress={handlePickImage}>
-            <Image source={{ uri: image }} style={stylesAddFood.imageStyle} />
-            <Text style={stylesAddFood.imageText}>Change Image</Text>
-          </TouchableOpacity>
-        ) : (
+        <View style={{ alignItems: 'center', marginBottom: 20 }}>
+          {image ? (
+            <TouchableOpacity onPress={handlePickImage}>
+              <Image source={{ uri: image }} style={stylesAddFood.imageStyle} />
+              <Text style={stylesAddFood.imageText}>Change Image</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={handlePickImage}
+              style={stylesAddFood.emptyImageStyle}
+            >
+              <Icon name="camera" size={70} color={theme.primary} />
+              <Text style={stylesAddFood.imageText}>Add Image</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
+        <TextInput
+          placeholder={addFoodText.placeHolders.title}
+          style={stylesAddFood.input}
+          value={title}
+          onChangeText={setTitle}
+          placeholderTextColor={color9}
+        />
+        <TextInput
+          placeholder={addFoodText.placeHolders.ingredients}
+          style={stylesAddFood.input}
+          value={ingredients}
+          onChangeText={setIngredients}
+          placeholderTextColor={color9}
+        />
+        <TextInput
+          placeholder={addFoodText.placeHolders.steps}
+          style={stylesAddFood.input}
+          value={steps}
+          onChangeText={setSteps}
+          multiline
+          placeholderTextColor={color9}
+        />
+
+        <View style={stylesAddFood.dropdownContainer}>
           <TouchableOpacity
-            onPress={handlePickImage}
-            style={stylesAddFood.emptyImageStyle}
+            style={stylesAddFood.dropdownButton}
+            onPress={() => setDropdownOpen(!dropdownOpen)}
+            activeOpacity={0.7}
           >
-            <Icon name="camera" size={70} color={theme.primary} />
-            <Text style={stylesAddFood.imageText}>Add Image</Text>
+            <Text style={stylesAddFood.dropdownButtonText}>{category}</Text>
+            <Icon
+              name={dropdownOpen ? 'chevron-up' : 'chevron-down'}
+              size={20}
+              color={colors.text}
+            />
           </TouchableOpacity>
-        )}
-      </View>
 
-      <TextInput
-        placeholder={addFoodText.placeHolders.title}
-        style={stylesAddFood.input}
-        value={title}
-        onChangeText={setTitle}
-        placeholderTextColor={color999}
-      />
-      <TextInput
-        placeholder={addFoodText.placeHolders.ingredients}
-        style={stylesAddFood.input}
-        value={ingredients}
-        onChangeText={setIngredients}
-        placeholderTextColor={color999}
-      />
-      <TextInput
-        placeholder={addFoodText.placeHolders.steps}
-        style={stylesAddFood.input}
-        value={steps}
-        onChangeText={setSteps}
-        multiline
-        placeholderTextColor={color999}
-      />
+          {dropdownOpen && (
+            <View style={stylesAddFood.dropdownList}>
+              {categories.map(categoryKey => (
+                <TouchableOpacity
+                  key={categoryKey}
+                  style={stylesAddFood.dropdownItem}
+                  onPress={() => {
+                    setCategory(categoryKey as typeof category);
+                    setDropdownOpen(false);
+                  }}
+                >
+                  <Text style={stylesAddFood.dropdownItemText}>
+                    {categoryKey}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+        </View>
 
-      <View style={stylesAddFood.radioGroup}>
-        <TouchableOpacity
-          style={stylesAddFood.radioOption}
-          onPress={() => setFoodType('Veg')}
+        <View style={stylesAddFood.radioGroup}>
+          <TouchableOpacity
+            style={stylesAddFood.radioOption}
+            onPress={() => setFoodType(FoodTypeEnum.VEG)}
+            activeOpacity={0.7}
+          >
+            <View style={stylesAddFood.radioCircle}>
+              {foodType === FoodTypeEnum.VEG && (
+                <View style={stylesAddFood.radioSelected} />
+              )}
+            </View>
+            <Text style={stylesAddFood.radioLabel}>Veg</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={stylesAddFood.radioOption}
+            onPress={() => setFoodType(FoodTypeEnum.NON_VEG)}
+            activeOpacity={0.7}
+          >
+            <View style={stylesAddFood.radioCircle}>
+              {foodType === FoodTypeEnum.NON_VEG && (
+                <View style={stylesAddFood.radioSelected} />
+              )}
+            </View>
+            <Text style={stylesAddFood.radioLabel}>{FoodTypeEnum.NON_VEG}</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Pressable
+          style={stylesAddFood.button}
+          onPress={handleSubmit}
+          disabled={loading}
         >
-          <View style={stylesAddFood.radioCircle}>
-            {foodType === 'Veg' && <View style={stylesAddFood.radioSelected} />}
-          </View>
-          <Text style={stylesAddFood.radioLabel}>Veg</Text>
-        </TouchableOpacity>
+          <Text style={stylesAddFood.buttonText}>
+            {loading ? addFoodText.saving : addFoodText.saveFood}
+          </Text>
+        </Pressable>
 
-        <TouchableOpacity
-          style={stylesAddFood.radioOption}
-          onPress={() => setFoodType('Non-Veg')}
+        <Pressable
+          style={[stylesAddFood.backButton, loading && { opacity: 0.5 }]}
+          onPress={navigation.goBack}
+          disabled={loading}
         >
-          <View style={stylesAddFood.radioCircle}>
-            {foodType === 'Non-Veg' && (
-              <View style={stylesAddFood.radioSelected} />
-            )}
-          </View>
-          <Text style={stylesAddFood.radioLabel}>Non-Veg</Text>
-        </TouchableOpacity>
-      </View>
-
-      <Pressable
-        style={stylesAddFood.button}
-        onPress={handleSubmit}
-        disabled={loading}
-      >
-        <Text style={stylesAddFood.buttonText}>
-          {loading ? 'Saving...' : 'Save Food'}
-        </Text>
-      </Pressable>
-
-      <Pressable
-        style={[stylesAddFood.backButton, loading && { opacity: 0.5 }]}
-        onPress={navigation.goBack}
-        disabled={loading}
-      >
-        <Icon name="return-up-back" size={25} color={white} />
-      </Pressable>
-    </ScrollView>
+          <Icon name="return-up-back" size={25} color={white} />
+        </Pressable>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

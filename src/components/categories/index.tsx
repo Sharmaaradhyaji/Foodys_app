@@ -1,13 +1,24 @@
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import { categoryStyles } from './categoryStyles';
-import { categories } from '../../utils/categoryData/data';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { brand } from '../../globals/globals';
 import { CategoryProps } from '../../types';
+import { RootState } from '../../store';
+import { useSelector } from 'react-redux';
+import { createCategoryStyles } from './categoryStyles';
+import { categories } from '../../utils/categoryDetails/data';
 
 const Categories = ({ activeCategory, setActiveCategory }: CategoryProps) => {
+   const theme = useSelector((state: RootState) => state.theme.colors);
+
+  const colors = {
+    ...theme,
+    themePrimaryOrange: theme.primary,
+  };
+
+  const categoryStyles = createCategoryStyles(colors);
+
   return (
     <Animated.View entering={FadeInDown.duration(500).springify()}>
       <ScrollView

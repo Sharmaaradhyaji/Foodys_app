@@ -18,7 +18,7 @@ export const stylesSignup = StyleSheet.create({
     padding: hp(4),
     backgroundColor: lightTheme.secondaryBackground,
     elevation: 4,
-    shadowColor: theme.color000,
+    shadowColor: theme.color0,
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 3 },
   },

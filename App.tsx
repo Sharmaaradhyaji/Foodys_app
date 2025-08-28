@@ -17,11 +17,12 @@ const toastConfig = {
 };
 
 const AppContent = () => {
-  const { colors } = useSelector((state: RootState) => state.theme);
+  const theme = useSelector((state: RootState) => state.theme.colors);
+  const stylesAll = createAppStyles(theme);
 
   return (
     <SafeAreaView
-      style={[stylesAll.all, { backgroundColor: colors.secondaryBackground }]}
+      style={[stylesAll.all]}
     >
       <NavigationContainer ref={navigationRef}>
         <StackNavigator />
@@ -37,9 +38,12 @@ const App = () => (
   </Provider>
 );
 
-const stylesAll = StyleSheet.create({
+const createAppStyles = (colors: 
+  {secondaryBackground: string}
+) => StyleSheet.create({
   all: {
     flex: 1,
+    backgroundColor: colors.secondaryBackground
   },
 });
 

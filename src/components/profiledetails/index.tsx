@@ -4,7 +4,7 @@ import { detailsStyle } from './detail.styles';
 import { profileText } from '../../globals/constants/constants';
 
 type Detail = {
-  name: string
+  name?: string
   detail: string
 } 
 
@@ -12,7 +12,7 @@ const Details = ({name, detail}: Detail) => {
   return (
     <View style={detailsStyle.data}>
       <Text style={detailsStyle.label}>{detail}</Text>
-      <Text style={detailsStyle.value}>{name || [profileText.notAvailable]}</Text>
+      <Text style={detailsStyle.value}>{name}</Text>
     </View>
   );
 };

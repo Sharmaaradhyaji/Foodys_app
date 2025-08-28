@@ -138,6 +138,8 @@ export const homeText = {
   Heading2: 'We got you served!',
   placeholderSearch: 'Search',
   Heading3: "Get the best on Foody's",
+  LoadingMore: "Loading more...",
+  LoadingFoods: "Loading foods...",
 };
 
 export const navbarText = {
@@ -167,7 +169,9 @@ export const addFoodText = {
     camera: 'Camera',
     gallery: 'Gallery',
     cancel: 'Cancel',
-  }
+  },
+  saving: "Saving...",
+  saveFood: "Save Food"
 }
 
 export const theme = {
@@ -187,10 +191,10 @@ export const theme = {
   shadowColor: '#888',
   greenDot: '🟢',
   redDot: '🔴',
-  color000: '#000',
-  color333: '#333',
-  color444: '#444',
-  color555: '#555',
+  color0: '#000',
+  color3: '#333',
+  color4: '#444',
+  color5: '#555',
   buttonBG: 'rgba(0,0,0,0.4)',
 
   errorTextToast: '#800000',
@@ -216,11 +220,11 @@ export const cancel = 'cancel';
 export const ok = 'ok';
 export const somethingWentWrong = 'Something went wrong'
 
-export const color000 = '#000';
-export const color333 = '#333';
-export const color444 = '#444';
-export const color555 = '#555';
-export const color999 = '#999';
+export const color0 = '#000';
+export const color3 = '#333';
+export const color4 = '#444';
+export const color5 = '#555';
+export const color9 = '#999';
 
 export const white = 'white';
 
@@ -229,3 +233,27 @@ export const emailRegex =
 export const numberRegex = /^\d{10}$/;
 export const namePlaceRegex = /^[a-zA-Z\s]{3,}$/;
 export const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
+
+export enum FoodTypeEnum {
+  VEG = "Veg",
+  NON_VEG = "Non-Veg",
+  HYBRID = "HYBRID",
+}
+
+export const categories = [
+  'Indian',
+  'Chinese',
+  'Mexican',
+  'Beverages',
+  'Desserts',
+  'Italian',
+];
+
+export enum CategoryEnum {
+  INDIAN = 'Indian',
+  CHINESE = 'Chinese',
+  MEXICAN = 'Mexican',
+  BEVERAGES = 'Beverages',
+  DESSERTS = 'Desserts',
+  ITALIAN = 'Italian',
+}

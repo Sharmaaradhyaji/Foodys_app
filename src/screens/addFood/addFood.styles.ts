@@ -1,17 +1,18 @@
 import { StyleSheet } from 'react-native';
 import { brand, hp, wp } from '../../globals/globals';
+import { color9 } from '../../globals/constants/constants';
 
 export const createAddFoodStyles = (colors: {
   background: string;
   text: string;
   themePrimaryOrange: string;
-  color333: string;
+  color3: string;
   secondaryBackground: string;
 }) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      padding: wp(5),
+      padding: wp(4),
       backgroundColor: colors.background,
     },
     heading: {
@@ -118,7 +119,37 @@ export const createAddFoodStyles = (colors: {
       color: brand.primary,
       marginTop: 10,
     },
-    errorText: {
-      
-    }
+    errorText: {},
+    dropdownContainer: {
+      marginBottom: hp(2),
+    },
+    dropdownButton: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: 12,
+      borderWidth: 1,
+      borderColor: colors.text,
+      borderRadius: wp(4),
+      backgroundColor: colors.secondaryBackground,
+    },
+    dropdownButtonText: {
+      fontSize: 16,
+      color: color9,
+    },
+    dropdownList: {
+      marginTop: 4,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 8,
+      backgroundColor: colors.secondaryBackground,
+      overflow: 'hidden',
+    },
+    dropdownItem: {
+      padding: 12,
+    },
+    dropdownItemText: {
+      fontSize: 16,
+      color: colors.text,
+    },
   });

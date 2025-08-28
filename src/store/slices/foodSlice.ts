@@ -6,15 +6,52 @@ import { AxiosError } from 'axios';
 const initialState: FoodState = {
   foods: [],
   loading: false,
+  loadingMore: false,
   error: null,
+  page: 1,
+  limit: 5,
+  total: 0,
+  hasMore: true,
 };
 
+interface PaginatedFoodResponse {
+  data: Food[];
+  page: number;
+  limit: number;
+  total: number;
+}
+
 export const showFoods = createAsyncThunk(
-  'food/showAllFoods',
-  async (_, { rejectWithValue }) => {
+  'food/fetchFoods',
+  async (
+    {
+      page = 1,
+      limit = 5,
+      foodType,
+      category,
+      search,
+    }: {
+      page?: number;
+      limit?: number;
+      foodType?: string;
+      category?: string;
+      search?: string;
+    },
+    { rejectWithValue },
+  ) => {
     try {
-      const res = await api.get('/foods');
-      return res.data.data as Food[];
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: limit.toString(),
+      });
+      if (foodType) params.append('foodType', foodType);
+      if (category) params.append('category', category);
+      if (search) params.append('search', search);
+
+      const res = await api.get<PaginatedFoodResponse>(
+        `/foods?${params.toString()}`,
+      );
+      return res.data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       return rejectWithValue(error.message);
@@ -34,7 +71,7 @@ export const addFood = createAsyncThunk(
       const error = err as AxiosError<{ message: string }>;
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 export const rateFood = createAsyncThunk(
@@ -59,16 +96,34 @@ const foodSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(showFoods.pending, state => {
-        state.loading = true;
+      .addCase(showFoods.pending, (state, action) => {
+        if (action.meta.arg.page === 1) state.loading = true;
+        else state.loadingMore = true;
         state.error = null;
       })
-      .addCase(showFoods.fulfilled, (state, action: PayloadAction<Food[]>) => {
-        state.loading = false;
-        state.foods = action.payload;
-      })
+      .addCase(
+        showFoods.fulfilled,
+        (state, action: PayloadAction<PaginatedFoodResponse>) => {
+          const { data, page, limit, total } = action.payload;
+
+          const combinedFoods = page === 1 ? data : [...state.foods, ...data];
+
+          const uniqueMap = new Map<string, Food>();
+          combinedFoods.forEach(food => uniqueMap.set(food._id, food));
+          state.foods = Array.from(uniqueMap.values());
+
+          state.page = page;
+          state.limit = limit;
+          state.total = total;
+          state.hasMore = state.foods.length < total;
+
+          state.loading = false;
+          state.loadingMore = false;
+        },
+      )
       .addCase(showFoods.rejected, (state, action) => {
         state.loading = false;
+        state.loadingMore = false;
         state.error = action.payload as string;
       })
       .addCase(addFood.pending, state => {
@@ -84,9 +139,11 @@ const foodSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(rateFood.fulfilled, (state, action: PayloadAction<Food>) => {
-        const idx = state.foods.findIndex(food => food._id === action.payload._id);
+        const idx = state.foods.findIndex(
+          food => food._id === action.payload._id,
+        );
         if (idx !== -1) state.foods[idx] = action.payload;
-      })
+      });
   },
 });
 

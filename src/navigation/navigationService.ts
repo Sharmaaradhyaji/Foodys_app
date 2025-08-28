@@ -1,4 +1,3 @@
-
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { StackTypeApp } from '../types';
 

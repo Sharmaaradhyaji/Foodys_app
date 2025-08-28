@@ -57,12 +57,6 @@ api.interceptors.response.use(
         store.dispatch(clearAuth());
         navigate('Login');
 
-        Toast.show({
-          type: 'error',
-          text1: axiosConfigText.sessionExpired,
-          text2: axiosConfigText.noRefreshToken,
-        });
-
         return Promise.reject(new Error(axiosConfigText.noRefreshToken));
       }
 
@@ -86,11 +80,6 @@ api.interceptors.response.use(
         );
 
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-
-        Toast.show({
-          type: 'success',
-          text1: axiosConfigText.accessTokenRefreshed,
-        });
 
         return api(originalRequest);
       } catch (refreshError: unknown) {

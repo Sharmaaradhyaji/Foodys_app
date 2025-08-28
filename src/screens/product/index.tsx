@@ -40,7 +40,7 @@ const Product: React.FC<Props> = ({ route }) => {
   } = route.params;
 
   const foodFromStore = useAppSelector((state: RootState) =>
-    state.food.foods.find(f => f._id === routeFoodId),
+    state.food.foods.find(food => food._id === routeFoodId),
   );
   const [localRating, setLocalRating] = useState(
     foodFromStore?.averageRating ?? 0,

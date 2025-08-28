@@ -20,16 +20,17 @@ import {
 import { stylesProfile } from './profile.styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Details from '../../components/profiledetails';
-import {  useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { StackTypeApp,  } from '../../types';
+import { StackTypeApp } from '../../types';
 import { fetchUser, logoutUser } from '../../store/slices/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { brand } from '../../globals/globals';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
+import { requestCameraPermission } from '../../utils/permissions';
 
-const Profile= () => {
+const Profile = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NativeStackNavigationProp<StackTypeApp>>();
 
@@ -70,6 +71,9 @@ const Profile= () => {
   };
 
   const openCamera = async () => {
+    const hasPermission = await requestCameraPermission();
+    if (!hasPermission) return;
+
     const result = await launchCamera({
       mediaType: 'photo',
       saveToPhotos: true,
@@ -84,6 +88,9 @@ const Profile= () => {
   };
 
   const openGallery = async () => {
+    const hasPermission = await requestCameraPermission();
+    if (!hasPermission) return;
+
     const result = await launchImageLibrary({ mediaType: 'photo' });
     if (result.assets && result.assets.length > 0) {
       setImageUri(result.assets[0].uri || '');

@@ -11,6 +11,7 @@ export const createHomeStyles = (colors: {
     container: {
       flex: 1,
       backgroundColor: colors.background,
+      marginBottom: hp(3),
     },
     hero: {
       borderRadius: 46,
@@ -41,7 +42,7 @@ export const createHomeStyles = (colors: {
     },
     cardView: {
       flex: 1,
-      marginBottom: hp(9),
+      marginBottom: hp(3),
     },
     columnWrapper: {
       gap: wp(1),
@@ -95,5 +96,15 @@ export const createHomeStyles = (colors: {
     },
     retryText: {
       color: 'white',
+    },
+    footerContainer: {
+      paddingVertical: hp('4%'),
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    footerText: {
+      marginTop: 1,
+      color: colors.text,
+      fontSize: 14,
     },
   });

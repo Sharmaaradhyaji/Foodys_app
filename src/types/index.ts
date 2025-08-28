@@ -9,6 +9,9 @@ import {
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { lightTheme } from '../globals/globals';
 import { ToastConfigParams, ToastType} from 'react-native-toast-message';
+import { FoodTypeEnum } from '../globals/constants/constants';
+
+export type FoodType = FoodTypeEnum;
 
 export interface UserData {
   name?: string;
@@ -18,8 +21,6 @@ export interface UserData {
   number?: string;
   password: string;
 }
-
-export type FoodType = 'Veg' | 'Non-Veg' | 'HYBRID';
 
 export type FoodDetails = Food
 
@@ -61,7 +62,7 @@ export interface PrimaryBtnProps {
 }
 
 export interface ToggleProps {
-  selected: FoodType;
+  selected: FoodTypeEnum;
   onSelect: (value: FoodType) => void;
 }
 
@@ -123,8 +124,7 @@ export interface Food {
   ratings: { userId: string; value: number }[];
   ingredients: string[];
   stepsToPrepare: string[];
-  foodType: 'Veg' | 'Non-Veg' | 'HYBRID';
-  userRatings?: number
+  foodType: FoodTypeEnum;
   category?: string
 }
 
@@ -133,13 +133,18 @@ export interface NewFood {
   imageUrl: string;
   ingredients: string[];
   stepsToPrepare: string[];
-  foodType: 'Veg' | 'Non-Veg' | 'HYBRID';
+  foodType: FoodTypeEnum;
 }
 
 export interface FoodState {
   foods: Food[];
   loading: boolean;
+  loadingMore: boolean;
   error: string | null;
+  page: number;
+  limit: number;
+  total: number;
+  hasMore: boolean;
 }
 
 export type CategoryProps = {

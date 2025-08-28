@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {
   allColor,
+  FoodTypeEnum,
   nonvegColor,
   stringConstants,
   vegColor,
@@ -29,7 +30,7 @@ export const Toggle = (props: ToggleProps) => {
           stylesToggle.option,
           props.selected === stringConstants.veg && stylesToggle.activeVeg,
         ]}
-        onPress={() => props.onSelect('Veg')}
+        onPress={() => props.onSelect(FoodTypeEnum.VEG)}
       >
         <View style={[stylesToggle.circle, { backgroundColor: vegColor }]} />
         <Text style={stylesToggle.label}>{stringConstants.veg}</Text>
@@ -41,7 +42,7 @@ export const Toggle = (props: ToggleProps) => {
           stylesToggle.option,
           props.selected === "HYBRID" && stylesToggle.activeHybrid,
         ]}
-        onPress={() => props.onSelect('HYBRID')}
+        onPress={() => props.onSelect(FoodTypeEnum.HYBRID)}
       >
         <View style={[stylesToggle.circle, { backgroundColor: allColor }]} />
         <Text style={stylesToggle.label}>All</Text>
@@ -54,7 +55,7 @@ export const Toggle = (props: ToggleProps) => {
           props.selected === stringConstants.nonVeg &&
             stylesToggle.activeNonVeg,
         ]}
-        onPress={() => props.onSelect('Non-Veg')}
+        onPress={() => props.onSelect(FoodTypeEnum.NON_VEG)}
       >
         <View style={[stylesToggle.circle, { backgroundColor: nonvegColor }]} />
         <Text style={stylesToggle.label}>{stringConstants.nonVeg}</Text>
