@@ -19,13 +19,21 @@ import { hp, wp, brand } from '../../globals/globals';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import Icon from 'react-native-vector-icons/Ionicons';
-import * as Animatable from 'react-native-animatable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { showFoods } from '../../store/slices/foodSlice';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import Categories from '../../components/categories';
-import { NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
+import { NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import AnimatedRe, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withSequence,
+  withTiming,
+  withDelay,
+  Easing,
+} from 'react-native-reanimated';
 
 const Home = () => {
   const navigation =
@@ -97,6 +105,52 @@ const Home = () => {
     lastScrollY.current = currentY;
   };
 
+  const scaleText = useSharedValue(1);
+  useEffect(() => {
+    scaleText.value = withRepeat(
+      withSequence(
+        withDelay(200, withTiming(1.1, { duration: 400, easing: Easing.ease })),
+        withTiming(1, { duration: 400, easing: Easing.ease }),
+      ),
+      -1,
+      false,
+    );
+  }, []);
+  const animatedTextStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleText.value }],
+  }));
+
+  const scaleIcon = useSharedValue(1);
+  const rotateIcon = useSharedValue(0);
+
+  useEffect(() => {
+    scaleIcon.value = withRepeat(
+      withSequence(
+        withTiming(1.2, { duration: 300 }),
+        withTiming(1, { duration: 300 }),
+      ),
+      -1,
+      true,
+    );
+
+    rotateIcon.value = withRepeat(
+      withSequence(
+        withTiming(10, { duration: 300 }),
+        withTiming(-10, { duration: 300 }),
+        withTiming(0, { duration: 300 }),
+      ),
+      -1,
+      true,
+    );
+  }, []);
+
+  const animatedIconStyle = useAnimatedStyle(() => ({
+    transform: [
+      { scale: scaleIcon.value },
+      { rotate: `${rotateIcon.value}deg` },
+    ],
+  }));
+
   return (
     <View style={stylesHome.container}>
       <Navbar />
@@ -147,32 +201,21 @@ const Home = () => {
                   <View>
                     <Text style={stylesHome.headText}>{homeText.Heading1}</Text>
 
-                    <Animatable.Text
-                      animation="pulse"
-                      easing="ease-out"
-                      duration={800}
-                      delay={200}
-                      iterationCount="infinite"
-                      iterationDelay={3000}
-                      style={stylesHome.headText}
+                    <AnimatedRe.Text
+                      style={[stylesHome.headText, animatedTextStyle]}
                     >
                       {homeText.Heading2}
-                    </Animatable.Text>
+                    </AnimatedRe.Text>
                   </View>
 
-                  <Animatable.View
-                    animation="tada"
-                    iterationCount="infinite"
-                    duration={7000}
-                    easing="linear"
-                  >
+                  <AnimatedRe.View style={animatedIconStyle}>
                     <Icon
                       name="fast-food-outline"
                       size={140}
                       color={brand.white}
                       style={stylesHome.heroIcon}
                     />
-                  </Animatable.View>
+                  </AnimatedRe.View>
                 </View>
 
                 <SearchBar

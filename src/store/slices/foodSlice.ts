@@ -139,10 +139,10 @@ const foodSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(rateFood.fulfilled, (state, action: PayloadAction<Food>) => {
-        const idx = state.foods.findIndex(
+        const index = state.foods.findIndex(
           food => food._id === action.payload._id,
         );
-        if (idx !== -1) state.foods[idx] = action.payload;
+        if (index !== -1) state.foods[index] = action.payload;
       });
   },
 });
